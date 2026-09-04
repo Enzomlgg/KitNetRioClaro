@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KitNetSP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-full flex flex-col">
+
+  <header class="text-center pt-12 pb-6 px-6 animate-fade-slide-down" style="animation-duration: 1s;">
+    <p class="text-xs uppercase mb-3 animate-shimmer" style="color: var(--color-secondary); font-family: var(--font-body); letter-spacing: 0.35em;">
+      Imóveis Compactos ✦ Bem Localizados
+    </p>
+    <h1 class="leading-tight" style="font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; color: var(--color-primary); letter-spacing: -0.02em;">
+      Espaços que <em style="color: var(--color-accent); font-style: italic;">cabem na sua vida</em>
+    </h1>
+    <p class="mt-3 animate-fade-slide-up delay-400" style="color: var(--color-muted-foreground); font-size: 1rem; max-width: 480px; margin: 12px auto 0;">
+      Kitnets e studios selecionados nos melhores bairros da cidade.
+      Praticidade, conforto e localização premium.
+    </p>
+  </header>
+
+  <nav id="bairros-nav" class="flex items-center justify-center flex-wrap gap-2 px-4 pb-6 animate-fade-slide-up delay-400">
+  </nav>
+
+  <main class="flex-1 flex flex-col items-center px-4 pb-8" id="main-content">
+    <div style="width: 100%; max-width: 860px; position: relative;">
+      
+      <div id="card-container" class="card-base">
+        <div style="position: relative; height: clamp(260px, 40vw, 440px); background: var(--color-muted);">
+          <img id="card-img" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,22,16,0.65) 0%, transparent 50%);"></div>
+          
+          <div id="card-destaque" style="position: absolute; top: 16px; right: 16px; background: var(--color-accent); color: var(--color-primary); font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px;">
+          </div>
+          
+          <div style="position: absolute; bottom: 20px; left: 24px; right: 24px;">
+            <h2 id="card-title" style="font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 700; color: #f5f0e8; margin: 0;">
+            </h2>
+            <p id="card-address" style="font-family: var(--font-body); font-size: 0.85rem; color: rgba(245,240,232,0.75); margin: 4px 0 0;">
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background: var(--color-card); flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; gap: 28px;">
+            <div>
+              <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted-foreground); margin: 0;">Área</p>
+              <p id="card-area" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--color-primary); margin: 2px 0 0;">
+              </p>
+            </div>
+            <div>
+              <p style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted-foreground); margin: 0;">Aluguel</p>
+              <p id="card-price" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--color-accent); margin: 2px 0 0;">
+              </p>
+            </div>
+          </div>
+          <button id="btn-interesse" class="btn-interesse">Tenho interesse</button>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px;">
+        <button id="prev-btn" class="nav-arrow" aria-label="Anterior">←</button>
+        <div id="dots-container" style="display: flex; gap: 8px;">
+        </div>
+        <button id="next-btn" class="nav-arrow" aria-label="Próximo">→</button>
+      </div>
+
+      <p id="counter" style="text-align: center; font-family: var(--font-body); font-size: 0.78rem; color: var(--color-muted-foreground); margin-top: 10px; letter-spacing: 0.08em;">
+      </p>
+    </div>
+  </main>
+
+  <!-- TELA DE DETALHES / PRODUTO (Oculta por padrão) -->
+  <div id="modal-detalhes" style="display: none; position: fixed; inset: 0; background: rgba(26,22,16,0.85); z-index: 100; overflow-y: auto; padding: 24px 16px;">
+    <div style="max-width: 800px; margin: 40px auto; background: var(--color-card); border-radius: 20px; padding: 32px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+      
+      <!-- Botão Fechar -->
+      <button id="fechar-modal" style="position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-primary); font-weight: bold;">✕</button>
+      
+      <h2 id="detalhe-titulo" style="font-family: var(--font-display); font-size: 2rem; color: var(--color-primary); margin: 0 0 4px;"></h2>
+      <p id="detalhe-endereco" style="color: var(--color-muted-foreground); font-size: 0.9rem; margin-bottom: 24px;"></p>
+
+      <!-- Imagem Principal Grande com Setas Integradas -->
+      <div style="position: relative; border-radius: 12px; overflow: hidden; height: 380px; margin-bottom: 16px; background: #000;">
+        <img id="detalhe-img-principal" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        
+        <!-- Botão Esquerda (Anterior) -->
+        <button id="detalhe-prev" aria-label="Foto anterior" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: background 0.2s; z-index: 10;">‹</button>
+        
+        <!-- Botão Direita (Próxima) -->
+        <button id="detalhe-next" aria-label="Próxima foto" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: background 0.2s; z-index: 10;">›</button>
+      </div>
+
+      <!-- Galeria de Fotos / Miniaturas Extras -->
+      <h3 style="font-family: var(--font-display); color: var(--color-primary); margin-bottom: 8px;">Galeria de Fotos</h3>
+      <div id="detalhe-galeria" style="display: flex; gap: 12px; margin-bottom: 24px; overflow-x: auto; scroll-behavior: smooth; padding: 4px 0 12px 0;">
+        <!-- Inserido via JS -->
+      </div>
+
+      <!-- Informações em Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px; background: var(--color-background); padding: 16px; border-radius: 12px;">
+        <div>
+          <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-muted-foreground); display: block;">Área Útil</span>
+          <strong id="detalhe-area" style="color: var(--color-primary); font-size: 1.1rem;"></strong>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-muted-foreground); display: block;">Valor do Aluguel</span>
+          <strong id="detalhe-valor" style="color: var(--color-accent); font-size: 1.1rem;"></strong>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-muted-foreground); display: block;">Tipologia</span>
+          <strong id="detalhe-quartos" style="color: var(--color-primary); font-size: 1.1rem;"></strong>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--color-muted-foreground); display: block;">IPTU</span>
+          <strong id="detalhe-iptu" style="color: var(--color-primary); font-size: 1.1rem;"></strong>
+        </div>
+      </div>
+
+      <h3 style="font-family: var(--font-display); color: var(--color-primary); margin-bottom: 8px;">Sobre o Imóvel</h3>
+      <p id="detalhe-descricao" style="color: var(--color-foreground); line-height: 1.6; font-size: 0.95rem; margin-bottom: 32px;"></p>
+
+      <h3 style="font-family: var(--font-display); color: var(--color-primary); margin-bottom: 12px;">Localização</h3>
+      <div id="maps-container" style="border-radius: 12px; overflow: hidden; height: 280px; margin-bottom: 24px; background: var(--color-muted);">
+        <!-- Mapa Google Pluggin -->
+        <iframe id="detalhe-mapa" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <a id="detalhe-whatsapp" href="#" target="_blank" class="btn-interesse" style="display: block; text-align: center; padding: 14px; font-size: 1rem;">Conversar com Corretor via WhatsApp</a>
+    </div>
+  </div>
+
+  <footer id="contato" style="background: var(--color-primary); color: var(--color-primary-foreground);">
+    <div style="max-width: 860px; margin: 0 auto; padding: 48px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px;">
+      <div>
+        <h3 style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; margin: 0 0 8px; color: #f5f0e8;">
+          KitNet<em style="color: var(--color-accent);">SP</em>
+        </h3>
+        <p style="font-size: 0.82rem; color: rgba(245,240,232,0.6); line-height: 1.6; margin: 0;">
+          Especialistas em imóveis compactos e studios em São Paulo desde 2015.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 12px;">Contato</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+          <li style="font-size: 0.83rem; color: rgba(245,240,232,0.75); display: flex; gap: 8px; align-items: flex-start;"><span style="flex-shrink: 0;">📞</span> (11) 9 8765-4321</li>
+          <li style="font-size: 0.83rem; color: rgba(245,240,232,0.75); display: flex; gap: 8px; align-items: flex-start;"><span style="flex-shrink: 0;">✉️</span> contato@kitnetsp.com.br</li>
+          <li style="font-size: 0.83rem; color: rgba(245,240,232,0.75); display: flex; gap: 8px; align-items: flex-start;"><span style="flex-shrink: 0;">📍</span> Av. Paulista, 1000 — São Paulo/SP</li>
+          <li style="font-size: 0.83rem; color: rgba(245,240,232,0.75); display: flex; gap: 8px; align-items: flex-start;"><span style="font-size: 0.75rem;">🕐</span> Seg–Sex 08h–18h · Sáb 09h–13h</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 12px;">Navegue</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+          <li><a href="#" class="footer-link">Início</a></li>
+          <li><a href="#" class="footer-link">Kitnets disponíveis</a></li>
+          <li><a href="#" class="footer-link">Como funciona</a></li>
+          <li><a href="#" class="footer-link">Documentação</a></li>
+          <li><a href="#" class="footer-link">Fale conosco</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="border-top: 1px solid rgba(245,240,232,0.1); padding: 18px 24px; text-align: center;">
+      <p style="font-size: 0.75rem; color: rgba(245,240,232,0.4); margin: 0; letter-spacing: 0.05em;">
+        &copy; <span id="current-year"></span> KitNetSP Imóveis · Todos os direitos reservados · CRECI-SP 12.345-J
+      </p>
+    </div>
+  </footer>
+
+  <script src="dados.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
