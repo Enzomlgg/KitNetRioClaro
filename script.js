@@ -26,6 +26,9 @@ function renderNav() {
   });
 }
 
+
+
+
 function updateCard() {
   const filtered = getFiltered();
   const total = filtered.length;
