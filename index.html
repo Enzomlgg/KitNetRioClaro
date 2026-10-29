@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kitnet Rio Claro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <header>
-    <div class="subtitle-top">Imóveis compactos • Bem localizados</div>
-    <h1><span>Kit Net</span> Rio Claro</h1>
+    <div class="header-content-wrapper">
+      <div class="subtitle-top">Imóveis compactos • Bem localizados</div>
+      <h1><span>Kit Net</span> Rio Claro</h1>
+    </div>
   </header>
 
   <div class="category-thumbnails-container" id="categoryThumbnailsContainer"></div>
@@ -72,6 +73,11 @@
     let currentModalPhotoIndex = 0;
     let activeKitnet = null;
 
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let mouseStartX = 0;
+    let isDragging = false;
+
     const categoryThumbnailsContainer = document.getElementById("categoryThumbnailsContainer");
     const carouselStage = document.getElementById("carouselStage");
     const carouselCounter = document.getElementById("carouselCounter");
@@ -102,6 +108,37 @@
     function init() {
       renderCategoryThumbnails();
       filterAndRenderKitnets(currentFilter);
+      setupSwipeEvents();
+    }
+
+    function setupSwipeEvents() {
+      carouselStage.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, {passive: true});
+
+      carouselStage.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) prevSlide();
+          else nextSlide();
+        }
+      }, {passive: true});
+
+      carouselStage.addEventListener('mousedown', e => {
+        mouseStartX = e.clientX;
+        isDragging = true;
+      });
+
+      carouselStage.addEventListener('mouseup', e => {
+        if (!isDragging) return;
+        const diff = e.clientX - mouseStartX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) prevSlide();
+          else nextSlide();
+        }
+        isDragging = false;
+      });
     }
 
     function renderCategoryThumbnails() {
@@ -170,7 +207,7 @@
 
         return `
           <div class="stage-card ${positionClass}" onclick="handleCardStageClick(${idx})">
-            <div class="card-image-box">
+            <div class="card-image-box" onclick="openDetailsModal(event, ${item.id})">
               <img src="${caminhoImgCapa}" alt="${item.alt || item.titulo}">
               <div class="badge-destaque">${item.destaque || 'Disponível'}</div>
             </div>
@@ -250,15 +287,15 @@
       const fotoAtual = fotos[currentModalPhotoIndex];
       const caminhoFoto = `Kits/${activeKitnet.pasta}/${fotoAtual}`;
 
-      const whatsappMsg = encodeURIComponent(`Olá! Tenho interesse no imóvel ${activeKitnet.titulo} (${activeKitnet.endereco}) anunciado, poderiamos conversar?`);
+      const whatsappMsg = encodeURIComponent(`Olá! Tenho interesse no imóvel ${activeKitnet.titulo} (${activeKitnet.endereco}) anunciado, poderíamos conversar?`);
       const whatsappLink = `https://wa.me/5519981710010?text=${whatsappMsg}`;
 
       modalDetailsContent.innerHTML = `
-        <div class="modal-gallery-main">
-          ${fotos.length > 1 ? `<button class="gallery-nav-btn prev" onclick="prevModalPhoto()">&#10094;</button>` : ''}
+        <div class="modal-gallery-main" onclick="openLightbox('${caminhoFoto}')">
+          ${fotos.length > 1 ? `<button class="gallery-nav-btn prev" onclick="event.stopPropagation(); prevModalPhoto()">&#10094;</button>` : ''}
           <img src="${caminhoFoto}" alt="${activeKitnet.alt || activeKitnet.titulo}">
-          ${fotos.length > 1 ? `<button class="gallery-nav-btn next" onclick="nextModalPhoto()">&#10095;</button>` : ''}
-          <button class="btn-fullscreen-trigger" onclick="openLightbox('${caminhoFoto}')">
+          ${fotos.length > 1 ? `<button class="gallery-nav-btn next" onclick="event.stopPropagation(); nextModalPhoto()">&#10095;</button>` : ''}
+          <button class="btn-fullscreen-trigger" onclick="event.stopPropagation(); openLightbox('${caminhoFoto}')">
             Abrir Imagem Completa
           </button>
         </div>
@@ -289,7 +326,7 @@
             </div>
             <div class="spec-item">
               <span class="label">Valor</span>
-              <span class="val" style="color:var(--accent-color);">${activeKitnet.valor}</span>
+              <span class="val" style="color:var(--color-accent);">${activeKitnet.valor}</span>
             </div>
             <div class="spec-item">
               <span class="label">Dormitórios</span>
