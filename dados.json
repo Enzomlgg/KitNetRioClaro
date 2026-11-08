@@ -1,0 +1,108 @@
+{
+  "whatsapp": "5519981710010",
+  "bairros": [
+    { "id": "Todos", "label": "Todos", "capa": "Kits/RM1/RM1 Fachada 3000x2000.jpg" },
+    { "id": "RM1", "label": "Res. Marrocos 1", "capa": "Kits/RM1/RM1 Fachada 3000x2000.jpg" },
+    { "id": "RM2", "label": "Res. Marrocos 2", "capa": "Kits/RM2/RM2 Fachada 3000x2000.jpg" },
+    { "id": "RM3", "label": "Res. Marrocos 3", "capa": "Kits/RM3/RM3 Fachada 3000x2000.jpg" },
+    { "id": "MLAS", "label": "Res. MLAS", "capa": "Kits/MLAS/MLAS Fachada 3000x2000.jpg" }
+  ],
+  "kitnets": [
+    {
+      "id": 1,
+      "bairro": "RM1",
+      "pasta": "M1",
+      "titulo": "Residencial M1",
+      "endereco": "Rua Karina — Kubinho",
+      "area": 42,
+      "valor": 1097,
+      "destaque": "Aykinho",
+      "descricao": "Excelente imóvel contando com sala e cozinha integrada, dormitório, banheiro e área de serviço.",
+      "quartos": "1 Dormitório",
+      "banheiros": "1 Banheiro",
+      "iptu": "Incluso",
+      "fotos": [
+        "M1 SALA FULL.jpg",
+        "M1 SALA 2 FULL.jpg",
+        "M1 COZINHA FULL.jpg",
+        "M1 DORMITÓRIO FULL.jpg",
+        "M1 DORMITÓRIOS FULL.jpg",
+        "M1 BANHO FULL.jpg",
+        "M1 SERVIÇO FULL.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "bairro": "RM1",
+      "pasta": "RM1",
+      "titulo": "Residencial Marrocos 1",
+      "endereco": "R. 10, 2910 — Santana",
+      "area": 45,
+      "valor": 1097,
+      "destaque": "IPTU + Garagem Incluído",
+      "descricao": "Excelente imóvel conta com sala e cozinha integrada, dois dormitórios, garagem, banheiro e área de serviço.",
+      "quartos": "2 Dormitórios",
+      "banheiros": "1 Banheiro",
+      "iptu": "Incluso",
+      "fotos": ["RM1 Fachada 3000x2000.jpg"]
+    },
+    {
+      "id": 3,
+      "bairro": "RM2",
+      "pasta": "RM2",
+      "titulo": "Residencial Marrocos 2",
+      "endereco": "Rua 11A, 431 - Vila Alemã",
+      "area": 36,
+      "valor": 1097,
+      "destaque": "IPTU + Água Incluído",
+      "descricao": "Unidade térrea que dispõe de sala/cozinha integrada, dois dormitórios e área de serviço.",
+      "quartos": "2 Dormitórios",
+      "banheiros": "1 Banheiro",
+      "iptu": "Incluso",
+      "fotos": ["RM2 Fachada 3000x2000.jpg"]
+    },
+    {
+      "id": 4,
+      "bairro": "RM3",
+      "pasta": "RM3",
+      "titulo": "Residencial Marrocos 3",
+      "endereco": "Rua 8A, 330 - Vila Alemã",
+      "area": 39,
+      "valor": 1516,
+      "destaque": "IPTU + Água Incluído",
+      "descricao": "Unidade no andar superior com sala/cozinha integrada e dois dormitórios.",
+      "quartos": "2 Dormitórios",
+      "banheiros": "1 Banheiro",
+      "iptu": "Incluso",
+      "fotos": ["RM3 Fachada 3000x2000.jpg"]
+    },
+    {
+      "id": 5,
+      "bairro": "MLAS",
+      "pasta": "MLAS",
+      "titulo": "Residencial MLAS",
+      "endereco": "Av. 56, 150 - Jardim Karan",
+      "area": 60,
+      "valor": 1250,
+      "destaque": "IPTU + Garagem Incluído",
+      "descricao": "Ambientes amplos com dois dormitórios, garagem e quintal coletivo.",
+      "quartos": "2 Dormitórios",
+      "banheiros": "1 Banheiro",
+      "iptu": "Incluso",
+      "fotos": [
+        "MLAS Fachada 3000x2000.jpg",
+        "MLAS Frente 3000x2000.jpg",
+        "MLAS Sala 3000x2000.jpg",
+        "MLAS Cozinha 3000x2000.jpg",
+        "MLAS Dorm 1 3000x2000.jpg",
+        "MLAS-Dorm-2-3000x2000.jpg",
+        "MLAS Banho 3000x2000.jpg",
+        "MLAS Serviço 3000x2000.jpg",
+        "MLAS Hall 3000x2000.jpg",
+        "MLAS Hall 2 3000x2000.jpg",
+        "MLAS Quintal 3000x2000.jpg",
+        "MLAS Planta 1000x1000.jpeg"
+      ]
+    }
+  ]
+}

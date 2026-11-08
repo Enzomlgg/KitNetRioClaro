@@ -3,384 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kit Net Rio Claro — Kitnets e studios para alugar</title>
+  <meta name="description" content="Locação de imóveis compactos e bem localizados em Rio Claro - SP.">
+
+  <!-- Fontes do Google: Playfair Display (títulos) e Outfit (textos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <!-- CABEÇALHO: frase pequena (.subtitle) + título principal (h1) -->
   <header>
-    <div class="header-content-wrapper">
-      <div class="subtitle-top">Imóveis compactos • Bem localizados</div>
-      <h1><span>Kit Net</span> Rio Claro</h1>
-    </div>
+    <p class="subtitle">Imóveis compactos • Bem localizados</p>
+    <h1>Kit Net Rio Claro</h1>
   </header>
 
-  <div class="category-thumbnails-container" id="categoryThumbnailsContainer"></div>
+  <!-- FILTRO DE BAIRROS: o script.js cria aqui os botões (.thumb) com a foto de cada residencial -->
+  <nav class="bairros" id="bairros" aria-label="Filtrar por residencial"></nav>
 
-  <main class="main-content">
-    <div class="carousel-stage" id="carouselStage"></div>
-    <div class="carousel-controls">
-      <button class="carousel-btn" onclick="prevSlide()">&#10094;</button>
-      <div class="carousel-counter" id="carouselCounter">1 / 1 imóveis</div>
-      <button class="carousel-btn" onclick="nextSlide()">&#10095;</button>
+  <main>
+    <!-- CARROSSEL: o script.js cria aqui os cards (.card) dos imóveis -->
+    <div class="stage" id="stage"></div>
+
+    <!-- CONTROLES: seta anterior, contador "1 / 5 imóveis" e seta próxima -->
+    <div class="controles">
+      <button class="seta" data-mover="-1" aria-label="Anterior">&#10094;</button>
+      <span id="counter">0 / 0 imóveis</span>
+      <button class="seta" data-mover="1" aria-label="Próximo">&#10095;</button>
     </div>
   </main>
 
-  <div id="detailsModal" class="modal-overlay" onclick="handleModalClick(event)">
-    <div class="modal-container">
-      <button class="modal-close" onclick="closeModal()">&times;</button>
-      <div id="modalDetailsContent"></div>
+  <!-- MODAL DE DETALHES: janela com galeria de fotos, specs e botão do WhatsApp.
+       O conteúdo (#modal-body) é preenchido pelo script.js ao clicar em "Detalhes" -->
+  <dialog id="modal">
+    <button class="fechar" data-fechar aria-label="Fechar">&times;</button>
+    <div id="modal-body"></div>
+  </dialog>
+
+  <!-- LIGHTBOX: foto em tela cheia (abre ao clicar na foto do modal).
+       .lb-palco = foto grande com setas | #lb-miniaturas = mini carrossel (preenchido pelo script.js) -->
+  <dialog id="lightbox">
+    <button class="voltar">✕ Voltar</button>
+    <div class="lb-palco">
+      <button class="nav prev" data-foto="-1" aria-label="Foto anterior">&#10094;</button>
+      <img id="lightbox-img" alt="">
+      <button class="nav next" data-foto="1" aria-label="Próxima foto">&#10095;</button>
     </div>
-  </div>
+    <div class="lb-miniaturas" id="lb-miniaturas"></div>
+  </dialog>
 
-  <div id="lightboxOverlay" class="lightbox-overlay" onclick="closeLightbox(event)">
-    <button class="lightbox-close-btn" onclick="closeLightboxDirect()">✕ Voltar</button>
-    <img id="lightboxImg" class="lightbox-img" src="" alt="Ampliar">
-  </div>
-
+  <!-- RODAPÉ: 3 colunas (sobre, contato, documentos) + copyright -->
   <footer>
-    <div class="footer-container">
-      <div class="footer-col">
+    <div class="footer-grid">
+      <div>
         <h4>Kitnet Rio Claro</h4>
         <p>Locação de imóveis compactos e bem localizados em Rio Claro - SP.</p>
       </div>
-      <div class="footer-col">
+      <div>
         <h4>Contato</h4>
         <p>Telefone / WhatsApp: (19) 98171-0010</p>
         <p>E-mail: kitnetrioclaro@gmail.com</p>
       </div>
-      <div class="footer-col">
+      <div>
         <h4>Documentos Úteis</h4>
-        <a href="#" target="_blank">Baixar Ficha de Cadastro (PDF)</a>
-        <a href="#" target="_blank">Baixar Modelo de Contrato (PDF)</a>
+        <a href="#" target="_blank" rel="noopener">Baixar Ficha de Cadastro (PDF)</a>
+        <a href="#" target="_blank" rel="noopener">Baixar Modelo de Contrato (PDF)</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Kitnet Rio Claro. Todos os direitos reservados.</p>
-    </div>
+    <!-- #ano é preenchido automaticamente com o ano atual pelo script.js -->
+    <p class="copyright">&copy; <span id="ano"></span> Kitnet Rio Claro. Todos os direitos reservados.</p>
   </footer>
 
-  <script>
-    let bairros = [];
-    let categoryBanners = {};
-    let kitnets = [];
-
-    let currentFilter = "Todos";
-    let currentIndex = 0;
-    let filteredKitnets = [];
-    let currentModalPhotoIndex = 0;
-    let activeKitnet = null;
-
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let mouseStartX = 0;
-    let isDragging = false;
-
-    const categoryThumbnailsContainer = document.getElementById("categoryThumbnailsContainer");
-    const carouselStage = document.getElementById("carouselStage");
-    const carouselCounter = document.getElementById("carouselCounter");
-    const detailsModal = document.getElementById("detailsModal");
-    const modalDetailsContent = document.getElementById("modalDetailsContent");
-    const lightboxOverlay = document.getElementById("lightboxOverlay");
-    const lightboxImg = document.getElementById("lightboxImg");
-
-    async function carregarDadosOnline() {
-      try {
-        const url = 'https://gist.githubusercontent.com/Enzomlgg/850ee015f0e181df562c07c00e2b1eb6/raw/Kitnet.json?t=' + Date.now();
-        const response = await fetch(url, { cache: 'no-store' });
-        const data = await response.json();
-
-        bairros = data.bairros || [];
-        categoryBanners = data.categoryBanners || {};
-        kitnets = data.kitnets || [];
-        filteredKitnets = [...kitnets];
-
-        init();
-      } catch (error) {
-        carouselStage.innerHTML = `<div style="padding:40px; text-align:center;">Erro ao carregar os dados dos imóveis. Verifique a conexão.</div>`;
-      }
-    }
-
-    window.onload = carregarDadosOnline;
-
-    function init() {
-      renderCategoryThumbnails();
-      filterAndRenderKitnets(currentFilter);
-      setupSwipeEvents();
-    }
-
-    function setupSwipeEvents() {
-      carouselStage.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, {passive: true});
-
-      carouselStage.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchEndX - touchStartX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) prevSlide();
-          else nextSlide();
-        }
-      }, {passive: true});
-
-      carouselStage.addEventListener('mousedown', e => {
-        mouseStartX = e.clientX;
-        isDragging = true;
-      });
-
-      carouselStage.addEventListener('mouseup', e => {
-        if (!isDragging) return;
-        const diff = e.clientX - mouseStartX;
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) prevSlide();
-          else nextSlide();
-        }
-        isDragging = false;
-      });
-    }
-
-    function renderCategoryThumbnails() {
-      categoryThumbnailsContainer.innerHTML = `
-        <div class="thumbnails-flex">
-          ${bairros.map((bairro, index) => {
-            const bannerData = categoryBanners[bairro.id] || categoryBanners["Todos"];
-            const imgPath = `Kits/${bannerData.pastaBanner}/${bannerData.imagemCapa}`;
-            const isActive = bairro.id === currentFilter ? 'active' : '';
-            const animDelay = (index * 0.1).toFixed(1);
-
-            return `
-              <div class="thumb-card ${isActive}" style="animation-delay: ${animDelay}s;" onclick="selectCategory('${bairro.id}')">
-                <img src="${imgPath}" alt="${bairro.label}">
-                <div class="thumb-content">
-                  <span>${bairro.label}</span>
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
-    }
-
-    function selectCategory(categoriaId) {
-      currentFilter = categoriaId;
-      currentIndex = 0;
-      renderCategoryThumbnails();
-      filterAndRenderKitnets(currentFilter);
-    }
-
-    function filterAndRenderKitnets(categoria) {
-      if (categoria === "Todos") {
-        filteredKitnets = [...kitnets];
-      } else {
-        filteredKitnets = kitnets.filter(k => k.bairro === categoria);
-      }
-      currentIndex = 0;
-      renderCarouselStage();
-    }
-
-    function renderCarouselStage() {
-      if (filteredKitnets.length === 0) {
-        carouselStage.innerHTML = `
-          <div class="kitnet-card" style="padding: 40px; text-align: center; width: 100%;">
-            <p style="color:#7A6F66;">Nenhum imóvel encontrado nesta categoria.</p>
-          </div>
-        `;
-        carouselCounter.textContent = `0 / 0 imóveis`;
-        return;
-      }
-
-      carouselStage.innerHTML = filteredKitnets.map((item, idx) => {
-        let positionClass = 'card-hidden';
-        const total = filteredKitnets.length;
-
-        if (idx === currentIndex) {
-          positionClass = 'card-active';
-        } else if (idx === (currentIndex - 1 + total) % total) {
-          positionClass = 'card-prev';
-        } else if (idx === (currentIndex + 1) % total) {
-          positionClass = 'card-next';
-        }
-
-        const caminhoImgCapa = `Kits/${item.pasta}/${item.imgCapa}`;
-
-        return `
-          <div class="stage-card ${positionClass}" onclick="handleCardStageClick(${idx})">
-            <div class="card-image-box" onclick="openDetailsModal(event, ${item.id})">
-              <img src="${caminhoImgCapa}" alt="${item.alt || item.titulo}">
-              <div class="badge-destaque">${item.destaque || 'Disponível'}</div>
-            </div>
-            <div class="card-body">
-              <h3 class="card-title">${item.titulo}</h3>
-              <p class="card-address">${item.endereco}</p>
-              <p class="card-description">${item.descricao}</p>
-              <div class="card-footer">
-                <div class="info-group">
-                  <div class="info-item">
-                    <span class="label">Área</span>
-                    <span class="value">${item.area}</span>
-                  </div>
-                  <div class="info-item">
-                    <span class="label">Aluguel</span>
-                    <span class="value price">${item.valor}</span>
-                  </div>
-                </div>
-                <button class="btn-details" onclick="openDetailsModal(event, ${item.id})">Detalhes</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      carouselCounter.textContent = `${currentIndex + 1} / ${filteredKitnets.length} imóveis`;
-    }
-
-    function handleCardStageClick(idx) {
-      if (idx !== currentIndex) {
-        currentIndex = idx;
-        renderCarouselStage();
-      }
-    }
-
-    function nextSlide() {
-      if (filteredKitnets.length <= 1) return;
-      currentIndex = (currentIndex + 1) % filteredKitnets.length;
-      renderCarouselStage();
-    }
-
-    function prevSlide() {
-      if (filteredKitnets.length <= 1) return;
-      currentIndex = (currentIndex - 1 + filteredKitnets.length) % filteredKitnets.length;
-      renderCarouselStage();
-    }
-
-    function openDetailsModal(event, id) {
-      if (event) event.stopPropagation();
-      activeKitnet = kitnets.find(k => k.id === id);
-      if (!activeKitnet) return;
-
-      currentModalPhotoIndex = 0;
-      renderModalContent();
-      detailsModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      detailsModal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    function handleModalClick(event) {
-      if (event.target === detailsModal) {
-        closeModal();
-      }
-    }
-
-    function renderModalContent() {
-      if (!activeKitnet) return;
-
-      const fotos = (activeKitnet.fotos && activeKitnet.fotos.length > 0) 
-        ? activeKitnet.fotos 
-        : [activeKitnet.imgCapa];
-
-      const fotoAtual = fotos[currentModalPhotoIndex];
-      const caminhoFoto = `Kits/${activeKitnet.pasta}/${fotoAtual}`;
-
-      const whatsappMsg = encodeURIComponent(`Olá! Tenho interesse no imóvel ${activeKitnet.titulo} (${activeKitnet.endereco}) anunciado, poderíamos conversar?`);
-      const whatsappLink = `https://wa.me/5519981710010?text=${whatsappMsg}`;
-
-      modalDetailsContent.innerHTML = `
-        <div class="modal-gallery-main" onclick="openLightbox('${caminhoFoto}')">
-          ${fotos.length > 1 ? `<button class="gallery-nav-btn prev" onclick="event.stopPropagation(); prevModalPhoto()">&#10094;</button>` : ''}
-          <img src="${caminhoFoto}" alt="${activeKitnet.alt || activeKitnet.titulo}">
-          ${fotos.length > 1 ? `<button class="gallery-nav-btn next" onclick="event.stopPropagation(); nextModalPhoto()">&#10095;</button>` : ''}
-          <button class="btn-fullscreen-trigger" onclick="event.stopPropagation(); openLightbox('${caminhoFoto}')">
-            Abrir Imagem Completa
-          </button>
-        </div>
-
-        ${fotos.length > 1 ? `
-          <div class="modal-thumbnails-strip">
-            ${fotos.map((foto, index) => {
-              const thumbPath = `Kits/${activeKitnet.pasta}/${foto}`;
-              const activeClass = index === currentModalPhotoIndex ? 'active' : '';
-              return `
-                <div class="modal-thumb-item ${activeClass}" onclick="setModalPhoto(${index})">
-                  <img src="${thumbPath}" alt="Miniatura ${index + 1}">
-                </div>
-              `;
-            }).join('')}
-          </div>
-        ` : ''}
-
-        <div class="modal-body">
-          <h2 class="card-title">${activeKitnet.titulo}</h2>
-          <p class="card-address">${activeKitnet.endereco}</p>
-          <p class="card-description">${activeKitnet.descricao}</p>
-          
-          <div class="specs-grid">
-            <div class="spec-item">
-              <span class="label">Área Útil</span>
-              <span class="val">${activeKitnet.area}</span>
-            </div>
-            <div class="spec-item">
-              <span class="label">Valor</span>
-              <span class="val" style="color:var(--color-accent);">${activeKitnet.valor}</span>
-            </div>
-            <div class="spec-item">
-              <span class="label">Dormitórios</span>
-              <span class="val">${activeKitnet.quartos || '—'}</span>
-            </div>
-            <div class="spec-item">
-              <span class="label">Banheiros</span>
-              <span class="val">${activeKitnet.banheiros || '—'}</span>
-            </div>
-            <div class="spec-item">
-              <span class="label">IPTU</span>
-              <span class="val">${activeKitnet.iptu || 'Incluso'}</span>
-            </div>
-          </div>
-
-          <a href="${whatsappLink}" target="_blank" class="btn-whatsapp">
-            Tenho Interesse (WhatsApp)
-          </a>
-        </div>
-      `;
-    }
-
-    function setModalPhoto(index) {
-      currentModalPhotoIndex = index;
-      renderModalContent();
-    }
-
-    function nextModalPhoto() {
-      if (!activeKitnet || !activeKitnet.fotos) return;
-      currentModalPhotoIndex = (currentModalPhotoIndex + 1) % activeKitnet.fotos.length;
-      renderModalContent();
-    }
-
-    function prevModalPhoto() {
-      if (!activeKitnet || !activeKitnet.fotos) return;
-      currentModalPhotoIndex = (currentModalPhotoIndex - 1 + activeKitnet.fotos.length) % activeKitnet.fotos.length;
-      renderModalContent();
-    }
-
-    function openLightbox(src) {
-      lightboxImg.src = src;
-      lightboxOverlay.classList.add('active');
-    }
-
-    function closeLightbox(event) {
-      if (event.target === lightboxOverlay) {
-        closeLightboxDirect();
-      }
-    }
-
-    function closeLightboxDirect() {
-      lightboxOverlay.classList.remove('active');
-    }
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
