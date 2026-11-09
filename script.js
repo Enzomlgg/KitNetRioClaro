@@ -169,8 +169,6 @@ function abrirModal(k) {
         ${disponivel(k) ? `
           <a class="btn-whatsapp" data-evento="whatsapp" target="_blank" rel="noopener"
              href="${zap(`Olá! Tenho interesse no imóvel ${k.titulo} (${k.endereco}) anunciado, poderíamos conversar?`)}">Tenho Interesse (WhatsApp)</a>
-          <a class="btn-whatsapp btn-visita" data-evento="visita" target="_blank" rel="noopener"
-             href="${zap(`Olá! Gostaria de agendar uma visita ao imóvel ${k.titulo} (${k.endereco}).`)}">Agendar visita</a>
         ` : `
           <p class="aviso-alugado">Este imóvel está alugado no momento.</p>
           <a class="btn-whatsapp" data-evento="avise-me" target="_blank" rel="noopener"
