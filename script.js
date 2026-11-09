@@ -4,6 +4,16 @@ let dados = { whatsapp: "", bairros: [], kitnets: [] };
 let lista = [];
 const state = { bairro: "Todos", i: 0, f: 0, kitnet: null };
 
+const zap = (msg) => `https://wa.me/${dados.whatsapp}?text=${encodeURIComponent(msg)}`;
+const disponivel = (k) => k.disponivel !== false;   // sem o campo = disponível
+const chave = (k) => k.slug || String(k.id);         // identificador usado no link direto
+
+// Conta eventos (abriu imóvel, clicou no WhatsApp...) se o GoatCounter estiver instalado.
+// Sem ele, não faz nada. Não usa cookies.
+function registrar(nome) {
+  try { window.goatcounter?.count({ path: nome, title: nome, event: true }); } catch {}
+}
+
 const foto = (k, n) => encodeURI(`Kits/${k.pasta}/${k.fotos[n]}`);
 const miniaturas = (k) => k.fotos.map((_, n) =>
   `<img src="${foto(k, n)}" data-n="${n}" alt="Miniatura ${n + 1}" loading="lazy">`).join("");
@@ -21,6 +31,14 @@ async function init() {
   }
   renderBairros();
   renderCards();
+
+  // Botão flutuante do WhatsApp (mensagem geral)
+  const flutuante = $("zap-flutuante");
+  flutuante.href = zap("Olá! Vi o site Kitnet Rio Claro e gostaria de mais informações.");
+  flutuante.hidden = false;
+  flutuante.addEventListener("click", () => registrar("whatsapp-flutuante"));
+
+  abrirPorHash(); // se o link veio com #marrocos-2, abre direto esse imóvel
 }
 
 /* ---------- Filtro por bairro ---------- */
@@ -34,18 +52,21 @@ function renderBairros() {
 
 $("bairros").addEventListener("click", (e) => {
   const btn = e.target.closest(".thumb");
-  if (!btn) return;
-  state.bairro = btn.dataset.id;
-  document.querySelectorAll(".thumb").forEach((t) => t.classList.toggle("active", t === btn));
-  renderCards();
+  if (btn) selecionarBairro(btn.dataset.id);
 });
+
+function selecionarBairro(id) {
+  state.bairro = id;
+  document.querySelectorAll(".thumb").forEach((t) => t.classList.toggle("active", t.dataset.id === id));
+  renderCards();
+}
 
 /* ---------- Carrossel ---------- */
 const cardHTML = (k) => `
   <article class="card">
-    <div class="card-img">
+    <div class="card-img ${disponivel(k) ? "" : "alugado"}">
       <img src="${foto(k, 0)}" alt="${k.titulo}" loading="lazy">
-      <span class="badge">${k.destaque || "Disponível"}</span>
+      <span class="badge ${disponivel(k) ? "" : "badge-alugado"}">${disponivel(k) ? k.destaque || "Disponível" : "Alugado"}</span>
     </div>
     <div class="card-body">
       <h3>${k.titulo}</h3>
@@ -62,7 +83,8 @@ const cardHTML = (k) => `
   </article>`;
 
 function renderCards() {
-  lista = state.bairro === "Todos" ? dados.kitnets : dados.kitnets.filter((k) => k.bairro === state.bairro);
+  const base = state.bairro === "Todos" ? dados.kitnets : dados.kitnets.filter((k) => k.bairro === state.bairro);
+  lista = [...base].sort((a, b) => disponivel(b) - disponivel(a)); // disponíveis primeiro, alugados por último
   state.i = 0;
   $("stage").innerHTML = lista.length
     ? lista.map(cardHTML).join("")
@@ -121,8 +143,6 @@ document.addEventListener("keydown", (e) => {
 function abrirModal(k) {
   state.kitnet = k;
   const varias = k.fotos.length > 1;
-  const zap = `https://wa.me/${dados.whatsapp}?text=` + encodeURIComponent(
-    `Olá! Tenho interesse no imóvel ${k.titulo} (${k.endereco}) anunciado, poderíamos conversar?`);
   const specs = [
     ["Área útil", `${k.area}m²`], ["Valor", preco(k), "preco"],
     ["Dormitórios", k.quartos], ["Banheiros", k.banheiros], ["IPTU", k.iptu],
@@ -145,11 +165,25 @@ function abrirModal(k) {
       <h3 class="mapa-titulo">Localização</h3>
       <iframe class="mapa" title="Mapa de ${k.titulo}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
         src="https://www.google.com/maps?q=${encodeURIComponent(k.mapa || `${k.endereco}, Rio Claro - SP`)}&output=embed"></iframe>
-      <a class="btn-whatsapp" href="${zap}" target="_blank" rel="noopener">Tenho Interesse (WhatsApp)</a>
+      <div class="acoes">
+        ${disponivel(k) ? `
+          <a class="btn-whatsapp" data-evento="whatsapp" target="_blank" rel="noopener"
+             href="${zap(`Olá! Tenho interesse no imóvel ${k.titulo} (${k.endereco}) anunciado, poderíamos conversar?`)}">Tenho Interesse (WhatsApp)</a>
+          <a class="btn-whatsapp btn-visita" data-evento="visita" target="_blank" rel="noopener"
+             href="${zap(`Olá! Gostaria de agendar uma visita ao imóvel ${k.titulo} (${k.endereco}).`)}">Agendar visita</a>
+        ` : `
+          <p class="aviso-alugado">Este imóvel está alugado no momento.</p>
+          <a class="btn-whatsapp" data-evento="avise-me" target="_blank" rel="noopener"
+             href="${zap(`Olá! Gostaria de ser avisado quando o imóvel ${k.titulo} (${k.endereco}) ficar disponível.`)}">Avise-me quando vagar</a>
+        `}
+        <button class="btn-compartilhar" data-compartilhar>Compartilhar este imóvel</button>
+      </div>
     </div>`;
 
   trocarFoto(0);
-  $("modal").showModal();
+  if (!$("modal").open) $("modal").showModal();
+  history.replaceState(null, "", "#" + chave(k)); // o endereço da página passa a ser o link direto do imóvel
+  registrar("abriu/" + chave(k));
 }
 
 // Troca a foto atual no modal E na tela cheia (os dois ficam sempre sincronizados)
@@ -177,6 +211,9 @@ function abrirLightbox() {
 
 $("modal").addEventListener("click", (e) => {
   const t = e.target;
+  const evento = t.closest("[data-evento]");
+  if (evento) registrar(`${evento.dataset.evento}/${chave(state.kitnet)}`); // o link do WhatsApp segue normalmente
+  if (t.closest("[data-compartilhar]")) return compartilhar(t.closest("[data-compartilhar]"));
   if (t === $("modal") || t.closest("[data-fechar]")) return $("modal").close();
   if (t.closest("[data-foto]")) return trocarFoto(state.f + +t.closest("[data-foto]").dataset.foto);
   if (t.closest("[data-n]")) return trocarFoto(+t.closest("[data-n]").dataset.n);
@@ -200,6 +237,39 @@ lightbox.addEventListener("pointerup", (e) => {
   const diff = e.clientX - lx;
   if (Math.abs(diff) > 60 && e.target.closest(".lb-palco")) trocarFoto(state.f + (diff > 0 ? -1 : 1));
 });
+
+/* ---------- Link direto para cada imóvel (#slug) ---------- */
+function abrirPorHash() {
+  const k = dados.kitnets.find((x) => chave(x) === location.hash.slice(1));
+  if (!k) return;
+  if (!lista.includes(k)) selecionarBairro("Todos");
+  state.i = lista.indexOf(k);
+  posicionar();
+  if (state.kitnet !== k || !$("modal").open) abrirModal(k);
+}
+window.addEventListener("hashchange", abrirPorHash);
+
+// Ao fechar o modal, tira o #imovel do endereço
+$("modal").addEventListener("close", () => history.replaceState(null, "", location.pathname + location.search));
+
+// Compartilhar: no celular abre o menu de compartilhar; no computador copia o link
+async function compartilhar(btn) {
+  const k = state.kitnet;
+  const url = location.href.split("#")[0] + "#" + chave(k);
+  registrar("compartilhar/" + chave(k));
+
+  if (navigator.share && matchMedia("(pointer: coarse)").matches) {
+    try { await navigator.share({ title: k.titulo, text: `${k.titulo} — ${preco(k)}`, url }); } catch {}
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(url);
+    btn.textContent = "✓ Link copiado!";
+    setTimeout(() => (btn.textContent = "Compartilhar este imóvel"), 2000);
+  } catch {
+    prompt("Copie o link:", url);
+  }
+}
 
 $("ano").textContent = new Date().getFullYear();
 init();

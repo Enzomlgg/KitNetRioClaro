@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- cores.css = todas as cores do site (edite lá) | style.css = layout e animações -->
+  <link rel="stylesheet" href="cores.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -68,13 +70,16 @@
       </div>
       <div>
         <h4>Documentos Úteis</h4>
-        <a href="#" target="_blank" rel="noopener">Baixar Ficha de Cadastro (PDF)</a>
-        <a href="#" target="_blank" rel="noopener">Baixar Modelo de Contrato (PDF)</a>
+        <a href="Documentos/Cadastro-de-Locacao.pdf" target="_blank" rel="noopener">Baixar Cadastro de Locação (PDF)</a>
+        <a href="Documentos/Contrato-de-Locacao-Marrocos.pdf" target="_blank" rel="noopener">Baixar Contrato de Locação — Marrocos (PDF)</a>
       </div>
     </div>
     <!-- #ano é preenchido automaticamente com o ano atual pelo script.js -->
     <p class="copyright">&copy; <span id="ano"></span> Kitnet Rio Claro. Todos os direitos reservados.</p>
   </footer>
+
+  <!-- BOTÃO FLUTUANTE DO WHATSAPP: sempre visível no canto da tela (o link é preenchido pelo script.js) -->
+  <a id="zap-flutuante" class="zap-flutuante" target="_blank" rel="noopener" hidden aria-label="Falar no WhatsApp">💬 WhatsApp</a>
 
   <script src="script.js"></script>
 </body>

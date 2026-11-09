@@ -2,15 +2,8 @@
    VARIÁVEIS E BASE
    ===================================================== */
 
-/* Cores e animação usadas no site todo. Mudou aqui, muda em tudo. */
-:root {
-  --bg: #121212;       /* fundo escuro */
-  --accent: #C68B29;   /* dourado: preços, selos, bordas ativas */
-  --ink: #121212;      /* cor do texto sobre fundo branco */
-  --muted: #6b7280;    /* cinza dos textos secundários */
-  --line: #e5e7eb;     /* cinza claro das linhas divisórias */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1); /* curva suave das animações */
-}
+/* As CORES ficam em cores.css. Aqui só a animação. */
+:root { --ease: cubic-bezier(0.16, 1, 0.3, 1); }  /* curva suave das animações (cores: ver cores.css) */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -22,7 +15,7 @@ body {
   font-family: 'Outfit', sans-serif;
   color: #fff;
   overflow-x: hidden;
-  background: linear-gradient(rgba(18, 18, 18, 0.78), rgba(18, 18, 18, 0.88)),
+  background: linear-gradient(var(--fundo-foto-topo), var(--fundo-foto-base)),
               url('Banners/Banner.jpg') center / cover no-repeat fixed var(--bg);
 }
 
@@ -37,7 +30,7 @@ dt { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(-
 dd { font-weight: 700; }
 
 /* .preco = valor do aluguel em dourado */
-.preco { color: var(--accent); }
+.preco { color: var(--card-preco); }
 
 /* Animações de entrada: subir (de baixo p/ cima), descer (de cima p/ baixo), entrar (modal) */
 @keyframes subir  { from { opacity: 0; transform: translateY(20px); } }
@@ -61,7 +54,7 @@ header {
   font-weight: 300;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #d1d5db;
+  color: var(--subtitulo);
   margin-bottom: 10px;
 }
 
@@ -69,6 +62,7 @@ header {
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2.2rem, 5vw, 3.8rem);
+  color: var(--titulo);
   text-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
 }
 
@@ -96,7 +90,7 @@ h1 {
   width: 170px;
   height: 110px;
   overflow: hidden;
-  border: 3px solid rgba(255, 255, 255, 0.1);
+  border: 3px solid var(--bairro-borda);
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   transition: transform 0.8s var(--ease), border-color 0.8s var(--ease), box-shadow 0.8s var(--ease);
@@ -119,13 +113,14 @@ h1 {
   z-index: 1;
   font-size: 0.85rem;
   font-weight: 600;
+  color: var(--bairro-nome);
 }
 
 /* Efeito ao passar o mouse */
-.thumb:hover { transform: scale(1.08); z-index: 5; border-color: var(--accent); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); }
+.thumb:hover { transform: scale(1.08); z-index: 5; border-color: var(--bairro-borda-hover); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); }
 
 /* .active = bairro selecionado no momento (borda dourada) */
-.thumb.active { transform: scale(1.04); border-color: var(--accent); box-shadow: 0 12px 30px rgba(198, 139, 41, 0.4); }
+.thumb.active { transform: scale(1.04); border-color: var(--bairro-borda-ativo); box-shadow: 0 12px 30px var(--bairro-brilho-ativo); }
 
 
 /* =====================================================
@@ -158,7 +153,7 @@ main { flex: 1; display: flex; flex-direction: column; align-items: center; padd
   position: absolute;
   width: 680px;
   overflow: hidden;
-  background: #fff;
+  background: var(--card-fundo);
   color: var(--ink);
   border-radius: 24px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
@@ -188,8 +183,8 @@ main { flex: 1; display: flex; flex-direction: column; align-items: center; padd
   top: 20px;
   right: 20px;
   padding: 8px 16px;
-  background: var(--accent);
-  color: var(--ink);
+  background: var(--card-selo-fundo);
+  color: var(--card-selo-texto);
   border-radius: 50px;
   font-size: 0.75rem;
   font-weight: 700;
@@ -203,7 +198,7 @@ main { flex: 1; display: flex; flex-direction: column; align-items: center; padd
 /* h3 = título do card | h2 = título do modal | .endereco e .descricao servem aos dois */
 h3, h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 4px; }
 .endereco { font-size: 0.95rem; color: var(--muted); margin-bottom: 15px; }
-.descricao { font-size: 0.95rem; line-height: 1.5; color: #4b5563; margin-bottom: 20px; }
+.descricao { font-size: 0.95rem; line-height: 1.5; color: var(--texto-descricao); margin-bottom: 20px; }
 
 /* .card-footer = linha inferior do card: área + aluguel à esquerda, botão à direita */
 .card-footer {
@@ -224,28 +219,29 @@ h3, h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-botto
 /* .btn-detalhes = botão preto "Detalhes" (fica dourado ao passar o mouse) */
 .btn-detalhes {
   padding: 12px 28px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--detalhes-fundo);
+  color: var(--detalhes-texto);
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.9rem;
   transition: all 0.8s var(--ease);
 }
-.btn-detalhes:hover { background: var(--accent); color: var(--ink); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(198, 139, 41, 0.4); }
+.btn-detalhes:hover { background: var(--detalhes-hover-fundo); color: var(--detalhes-hover-texto); transform: translateY(-2px); box-shadow: 0 6px 20px var(--detalhes-brilho); }
 
 /* .controles = linha abaixo do carrossel com as setas e o contador */
-.controles { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 15px; font-size: 0.9rem; font-weight: 500; }
+.controles { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 15px; font-size: 0.9rem; font-weight: 500; color: var(--contador); }
 
 /* .seta = botão redondo de anterior/próximo */
 .seta {
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--seta-borda);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--seta-fundo);
+  color: var(--seta-texto);
   transition: all 0.8s var(--ease);
 }
-.seta:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); transform: scale(1.08); }
+.seta:hover { background: var(--seta-hover-fundo); border-color: var(--seta-hover-fundo); color: var(--seta-hover-texto); transform: scale(1.08); }
 
 
 /* =====================================================
@@ -261,7 +257,7 @@ dialog {
   overflow-y: auto;
   border: 0;
   border-radius: 24px;
-  background: #fff;
+  background: var(--modal-fundo);
   color: var(--ink);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 }
@@ -279,13 +275,13 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
+  background: var(--modal-fechar-fundo);
+  color: var(--modal-fechar-texto);
   font-size: 1.2rem;
 }
 
 /* Botões escuros do modal ficam dourados ao passar o mouse */
-.fechar:hover, .nav:hover, .ampliar:hover { background: var(--accent); color: var(--ink); }
+.fechar:hover, .nav:hover, .ampliar:hover { background: var(--galeria-botao-hover-fundo); color: var(--galeria-botao-hover-texto); }
 
 /* .galeria = área da foto grande no topo do modal (fundo preto) */
 .galeria {
@@ -294,7 +290,7 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  background: var(--galeria-fundo);
   cursor: pointer;
 }
 .galeria > img { max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -307,8 +303,8 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  background: var(--galeria-botao-fundo);
+  color: var(--galeria-botao-texto);
 }
 .prev { left: 15px; }
 .next { right: 15px; }
@@ -321,8 +317,8 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   padding: 6px 14px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
-  background: rgba(0, 0, 0, 0.75);
-  color: #fff;
+  background: var(--galeria-botao-fundo);
+  color: var(--galeria-botao-texto);
   font-size: 0.8rem;
 }
 
@@ -333,7 +329,7 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   gap: 12px;
   padding: 15px 20px;
   overflow-x: auto;
-  background: #161210;
+  background: var(--miniaturas-fundo);
 }
 .miniaturas img {
   flex-shrink: 0;
@@ -346,7 +342,7 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   cursor: pointer;
   transition: opacity 0.4s var(--ease);
 }
-.miniaturas img:hover, .miniaturas img.active { opacity: 1; border-color: var(--accent); }
+.miniaturas img:hover, .miniaturas img.active { opacity: 1; border-color: var(--miniatura-ativa); }
 
 /* .modal-info = parte de texto do modal (título, descrição, specs, botão) */
 .modal-info { padding: 30px; }
@@ -358,14 +354,31 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   gap: 15px;
   margin: 20px 0;
   padding: 20px;
-  background: #f9fafb;
-  border: 1px solid var(--line);
+  background: var(--specs-fundo);
+  border: 1px solid var(--specs-borda);
   border-radius: 16px;
 }
 
 /* .mapa-titulo = título "Localização" e .mapa = mapa do Google (iframe) abaixo das specs */
 .mapa-titulo { font-size: 1.2rem; margin: 25px 0 12px; }
-.mapa { display: block; width: 100%; height: 300px; border: 0; border-radius: 16px; background: var(--line); }
+.mapa { display: block; width: 100%; height: 300px; border: 0; border-radius: 16px; background: var(--mapa-fundo); }
+
+/* .acoes = bloco de botões do modal (WhatsApp, visita, compartilhar), um embaixo do outro */
+.acoes { display: grid; gap: 12px; margin-top: 25px; }
+.acoes .btn-whatsapp { margin-top: 0; border: 2px solid transparent; }
+
+/* .btn-visita = botão "Agendar visita", só com contorno verde */
+.acoes .btn-visita { background: transparent; color: var(--visita-cor); border-color: var(--visita-cor); box-shadow: none; }
+.acoes .btn-visita:hover { background: var(--visita-hover-fundo); border-color: var(--visita-hover-fundo); color: var(--visita-hover-texto); }
+
+/* .btn-compartilhar = botão discreto "Compartilhar este imóvel" */
+.btn-compartilhar { padding: 12px; border: 1px solid var(--compartilhar-borda); border-radius: 50px; color: var(--compartilhar-texto); font-weight: 600; transition: all 0.4s var(--ease); }
+.btn-compartilhar:hover { border-color: var(--compartilhar-hover-borda); color: var(--compartilhar-hover-texto); }
+
+/* Imóvel alugado: foto em preto e branco, selo vermelho e aviso no modal */
+.card-img.alugado img { filter: grayscale(1) brightness(0.85); }
+.badge.badge-alugado { background: var(--alugado-selo-fundo); color: var(--alugado-selo-texto); }
+.aviso-alugado { padding: 12px 16px; background: var(--alugado-aviso-fundo); color: var(--alugado-aviso-texto); border-radius: 12px; font-weight: 600; text-align: center; }
 
 /* .btn-whatsapp = botão verde "Tenho Interesse" */
 .btn-whatsapp {
@@ -373,15 +386,15 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   justify-content: center;
   margin-top: 25px;
   padding: 14px 28px;
-  background: #25D366;
-  color: #fff;
+  background: var(--whats-fundo);
+  color: var(--whats-texto);
   border-radius: 50px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+  box-shadow: 0 4px 15px var(--whats-brilho);
   transition: all 0.8s var(--ease);
 }
-.btn-whatsapp:hover { background: #1EBE5D; transform: translateY(-2px); }
+.btn-whatsapp:hover { background: var(--whats-hover); transform: translateY(-2px); }
 
 
 /* =====================================================
@@ -395,7 +408,7 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   max-height: none;
   height: 100%;
   border-radius: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: var(--lightbox-fundo);
 }
 /* display:flex só quando aberto (senão a janela nunca fecharia) */
 #lightbox[open] { display: flex; flex-direction: column; }
@@ -407,7 +420,7 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
 /* .lb-miniaturas = mini carrossel de fotos abaixo da foto grande (reaproveita o estilo das miniaturas do modal) */
 .lb-miniaturas { display: flex; justify-content: safe center; gap: 12px; padding: 15px 20px 25px; overflow-x: auto; }
 .lb-miniaturas img { flex-shrink: 0; width: 90px; height: 66px; object-fit: cover; border: 2px solid transparent; border-radius: 8px; opacity: 0.55; cursor: pointer; transition: opacity 0.4s var(--ease); }
-.lb-miniaturas img:hover, .lb-miniaturas img.active { opacity: 1; border-color: var(--accent); }
+.lb-miniaturas img:hover, .lb-miniaturas img.active { opacity: 1; border-color: var(--lb-miniatura-ativa); }
 
 /* .unica = imóvel com 1 foto só: sem setas nem miniaturas */
 #lightbox.unica .nav, #lightbox.unica .lb-miniaturas { display: none; }
@@ -418,13 +431,13 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   top: 25px;
   right: 25px;
   padding: 10px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--voltar-borda);
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: var(--voltar-fundo);
+  color: var(--voltar-texto);
   font-weight: 600;
 }
-.voltar:hover { background: #fff; color: var(--ink); }
+.voltar:hover { background: var(--voltar-hover-fundo); color: var(--voltar-hover-texto); }
 
 
 /* =====================================================
@@ -434,10 +447,10 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
 footer {
   margin-top: 60px;
   padding: 50px 20px 20px;
-  background: #161210;
-  color: #9ca3af;
+  background: var(--rodape-fundo);
+  color: var(--rodape-texto);
   font-size: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--rodape-borda);
 }
 
 /* .footer-grid = as 3 colunas (viram 1 coluna no celular automaticamente) */
@@ -448,14 +461,43 @@ footer {
   max-width: 950px;
   margin: 0 auto;
   padding-bottom: 30px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--rodape-borda);
 }
-footer h4 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: #fff; margin-bottom: 15px; }
+footer h4 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--rodape-titulo); margin-bottom: 15px; }
 footer p, footer a { display: block; margin-bottom: 8px; color: inherit; text-decoration: none; }
-footer a:hover { color: var(--accent); }
+footer a:hover { color: var(--rodape-link-hover); }
+
+/* Espaço extra no fim do rodapé para o botão flutuante do WhatsApp não cobrir o texto */
+footer { padding-bottom: 80px; }
 
 /* .copyright = linha final centralizada */
-.copyright { text-align: center; padding-top: 25px; font-size: 0.85rem; color: var(--muted); }
+.copyright { text-align: center; padding-top: 25px; font-size: 0.85rem; color: var(--rodape-copyright); }
+
+
+/* =====================================================
+   BOTÃO FLUTUANTE DO WHATSAPP
+   ===================================================== */
+
+/* .zap-flutuante = pílula verde fixa no canto inferior direito */
+.zap-flutuante {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background: var(--zap-flut-fundo);
+  color: var(--zap-flut-texto);
+  border-radius: 50px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 25px var(--zap-flut-brilho);
+  transition: all 0.8s var(--ease);
+}
+.zap-flutuante:hover { background: var(--zap-flut-hover); transform: translateY(-3px); }
+.zap-flutuante[hidden] { display: none; } /* aparece só depois que o JS preenche o link */
 
 
 /* =====================================================

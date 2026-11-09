@@ -10,6 +10,7 @@
   "kitnets": [
     {
       "id": 1,
+      "slug": "m1",
       "bairro": "RM1",
       "pasta": "M1",
       "titulo": "Residencial M1",
@@ -21,6 +22,7 @@
       "quartos": "1 Dormitório",
       "banheiros": "1 Banheiro",
       "iptu": "Incluso",
+      "disponivel": true,
       "fotos": [
         "M1 SALA FULL.jpg",
         "M1 SALA 2 FULL.jpg",
@@ -33,6 +35,7 @@
     },
     {
       "id": 2,
+      "slug": "marrocos-1",
       "bairro": "RM1",
       "pasta": "RM1",
       "titulo": "Residencial Marrocos 1",
@@ -44,10 +47,12 @@
       "quartos": "2 Dormitórios",
       "banheiros": "1 Banheiro",
       "iptu": "Incluso",
+      "disponivel": true,
       "fotos": ["RM1 Fachada 3000x2000.jpg"]
     },
     {
       "id": 3,
+      "slug": "marrocos-2",
       "bairro": "RM2",
       "pasta": "RM2",
       "titulo": "Residencial Marrocos 2",
@@ -59,10 +64,12 @@
       "quartos": "2 Dormitórios",
       "banheiros": "1 Banheiro",
       "iptu": "Incluso",
+      "disponivel": true,
       "fotos": ["RM2 Fachada 3000x2000.jpg"]
     },
     {
       "id": 4,
+      "slug": "marrocos-3",
       "bairro": "RM3",
       "pasta": "RM3",
       "titulo": "Residencial Marrocos 3",
@@ -74,10 +81,12 @@
       "quartos": "2 Dormitórios",
       "banheiros": "1 Banheiro",
       "iptu": "Incluso",
+      "disponivel": true,
       "fotos": ["RM3 Fachada 3000x2000.jpg"]
     },
     {
       "id": 5,
+      "slug": "mlas",
       "bairro": "MLAS",
       "pasta": "MLAS",
       "titulo": "Residencial MLAS",
@@ -89,6 +98,7 @@
       "quartos": "2 Dormitórios",
       "banheiros": "1 Banheiro",
       "iptu": "Incluso",
+      "disponivel": true,
       "fotos": [
         "MLAS Fachada 3000x2000.jpg",
         "MLAS Frente 3000x2000.jpg",
