@@ -6,12 +6,10 @@
   <title>Kit Net Rio Claro — Kitnets e studios para alugar</title>
   <meta name="description" content="Locação de imóveis compactos e bem localizados em Rio Claro - SP.">
 
-  <!-- Fontes do Google: Playfair Display (títulos) e Outfit (textos) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- cores.css = todas as cores do site (edite lá) | style.css = layout e animações -->
-  <link rel="stylesheet" href="cores.css">
+  <!-- FONTES: o site usa Playfair Display (títulos) e Outfit (textos) se estiverem disponíveis;
+       senão, usa fontes padrão do aparelho (Georgia e Segoe UI). Nada é baixado de sites externos. -->
+
+  <!-- ESTILOS: style.css tem a PARTE 1 (cores) e a PARTE 2 (layout e animações) -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -80,6 +78,16 @@
 
   <!-- BOTÃO FLUTUANTE DO WHATSAPP: sempre visível no canto da tela (o link é preenchido pelo script.js) -->
   <a id="zap-flutuante" class="zap-flutuante" target="_blank" rel="noopener" hidden aria-label="Falar no WhatsApp">💬 WhatsApp</a>
+
+  <!-- MÉTRICAS SEM COOKIES (opcional): escolha uma opção, tire o comentário e troque os dados pelos seus.
+       A: Cloudflare Web Analytics (grátis) = visitas, origem e aparelhos. Não conta cliques/eventos.
+       B: GoatCounter = visitas + eventos do site (qual imóvel foi aberto, cliques no WhatsApp...).
+          Uso comercial pode exigir plano pago: confira em goatcounter.com antes de usar.
+
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "SEU_TOKEN_AQUI"}'></script>
+
+  <script data-goatcounter="https://SEU-CODIGO.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  -->
 
   <script src="script.js"></script>
 </body>
