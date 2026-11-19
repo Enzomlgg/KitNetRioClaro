@@ -14,6 +14,12 @@ function registrar(nome) {
   try { window.goatcounter?.count({ path: nome, title: nome, event: true }); } catch {}
 }
 
+// Abre links (WhatsApp, PDFs) sem usar <a href>: qualquer elemento com data-url
+document.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-url]");
+  if (el) window.open(el.dataset.url, "_blank", "noopener");
+});
+
 const foto = (k, n) => encodeURI(`Kits/${k.pasta}/${k.fotos[n]}`);
 const miniaturas = (k) => k.fotos.map((_, n) =>
   `<img src="${foto(k, n)}" data-n="${n}" alt="Miniatura ${n + 1}" loading="lazy">`).join("");
@@ -34,7 +40,7 @@ async function init() {
 
   // Botão flutuante do WhatsApp (mensagem geral)
   const flutuante = $("zap-flutuante");
-  flutuante.href = zap("Olá! Vi o site Kitnet Rio Claro e gostaria de mais informações.");
+  flutuante.dataset.url = zap("Olá! Vi o site Kitnet Rio Claro e gostaria de mais informações.");
   flutuante.hidden = false;
   flutuante.addEventListener("click", () => registrar("whatsapp-flutuante"));
 
@@ -129,8 +135,8 @@ stage.addEventListener("click", (e) => {
   const card = e.target.closest(".card");
   if (arrastou || !card) return;
   const idx = [...stage.children].indexOf(card);
-  if (idx !== state.i) { state.i = idx; posicionar(); }
-  else if (e.target.closest(".card-img, .btn-detalhes")) abrirModal(lista[idx]);
+  if (idx !== state.i) { state.i = idx; posicionar(); }   // toque num card lateral: traz ele para o centro
+  else abrirModal(lista[idx]);                             // toque em qualquer parte do card central: abre os detalhes
 });
 
 document.addEventListener("keydown", (e) => {
@@ -167,12 +173,12 @@ function abrirModal(k) {
         src="https://www.google.com/maps?q=${encodeURIComponent(k.mapa || `${k.endereco}, Rio Claro - SP`)}&output=embed"></iframe>
       <div class="acoes">
         ${disponivel(k) ? `
-          <a class="btn-whatsapp" data-evento="whatsapp" target="_blank" rel="noopener"
-             href="${zap(`Olá! Tenho interesse no imóvel ${k.titulo} (${k.endereco}) anunciado, poderíamos conversar?`)}">Tenho Interesse (WhatsApp)</a>
+          <button class="btn-whatsapp" data-evento="whatsapp"
+             data-url="${zap(`Olá! Tenho interesse no imóvel ${k.titulo} (${k.endereco}) anunciado, poderíamos conversar?`)}">Tenho Interesse (WhatsApp)</button>
         ` : `
           <p class="aviso-alugado">Este imóvel está alugado no momento.</p>
-          <a class="btn-whatsapp" data-evento="avise-me" target="_blank" rel="noopener"
-             href="${zap(`Olá! Gostaria de ser avisado quando o imóvel ${k.titulo} (${k.endereco}) ficar disponível.`)}">Avise-me quando vagar</a>
+          <button class="btn-whatsapp" data-evento="avise-me"
+             data-url="${zap(`Olá! Gostaria de ser avisado quando o imóvel ${k.titulo} (${k.endereco}) ficar disponível.`)}">Avise-me quando vagar</button>
         `}
         <button class="btn-compartilhar" data-compartilhar>Compartilhar este imóvel</button>
       </div>
@@ -210,7 +216,7 @@ function abrirLightbox() {
 $("modal").addEventListener("click", (e) => {
   const t = e.target;
   const evento = t.closest("[data-evento]");
-  if (evento) registrar(`${evento.dataset.evento}/${chave(state.kitnet)}`); // o link do WhatsApp segue normalmente
+  if (evento) registrar(`${evento.dataset.evento}/${chave(state.kitnet)}`); // a abertura do WhatsApp é feita pelo clique geral de data-url, no topo do arquivo
   if (t.closest("[data-compartilhar]")) return compartilhar(t.closest("[data-compartilhar]"));
   if (t === $("modal") || t.closest("[data-fechar]")) return $("modal").close();
   if (t.closest("[data-foto]")) return trocarFoto(state.f + +t.closest("[data-foto]").dataset.foto);

@@ -1,131 +1,96 @@
+/* #########################################################################
+   ÍNDICE
+     1. COMO MUDAR AS CORES
+     2. BASE DA PÁGINA (fontes, fundo, textos dos dados, animações)
+     3. CABEÇALHO
+     4. BARRA DE BAIRROS
+     5. CARROSSEL E CARD DO IMÓVEL
+     6. SETAS E CONTADOR
+     7. MODAL DE DETALHES
+     8. TELA CHEIA
+     9. RODAPÉ
+    10. BOTÃO FLUTUANTE DO WHATSAPP
+    11. CELULAR (telas até 850px)
+
+   PADRÃO DAS FOTOS: 3000 x 2000 px (proporção 3:2).
+
+/* ========================================================================= */
 :root {
+  /* ----- TEXTO: famílias de fonte usadas no site todo ----- */
+  --fonte-times: 'Times New Roman', Times, serif;   /* textos sem fonte própria (endereço, descrição, contador) */
+  --fonte-arial: Arial, Helvetica, sans-serif;      /* botões, títulos dos cards, dados, rodapé */
 
-  /* ---------- BASE DA PÁGINA ---------- */
-  --bg: #121212;                       /* cor atrás da foto de fundo */
-  --fundo-foto-topo: rgba(18, 18, 18, 0.78);  /* escurecimento da foto de fundo (topo) */
-  --fundo-foto-base: rgba(18, 18, 18, 0.88);  /* escurecimento da foto de fundo (base) */
-  --ink: #1f2933;                      /* texto escuro (sobre fundo branco) */
-  --muted: #6b7280;                    /* texto secundário: endereço, rótulos */
-  --line: #e5e7eb;                     /* linhas divisórias */
-  --texto-descricao: #4b5563;          /* texto da descrição do imóvel */
+  /* ----- TEXTO DOS DADOS: rótulo, valor e preço (card e modal) ----- */
+  --dado-rotulo-fonte: var(--fonte-arial);   /* "ÁREA", "ALUGUEL"... */
+  --dado-rotulo-tamanho: 1rem;
+  --dado-rotulo-peso: 300;
+  --dado-rotulo-caixa: uppercase;
 
-  /* ---------- CABEÇALHO ---------- */
-  --subtitulo: #d1d5db;                /* frase pequena acima do título */
-  --titulo: #ffffff;                   /* "Kit Net Rio Claro" */
+  --dado-valor-fonte: var(--fonte-arial);    /* "36m²", "2 Dormitórios"... */
+  --dado-valor-tamanho: 1rem;
+  --dado-valor-peso: 300;
+  --dado-valor-caixa: uppercase;
 
-  /* ---------- BAIRROS (miniaturas do topo) ---------- */
-  --bairro-nome: #ffffff;                      /* nome sobre a foto */
-  --bairro-borda: rgba(255, 255, 255, 0.22);   /* borda normal (cinza-branco translúcido) */
-  --bairro-borda-hover: #e5e7eb;               /* borda ao passar o mouse */
-  --bairro-borda-ativo: #f9fafb;               /* borda do bairro selecionado */
-  --bairro-brilho-ativo: rgba(249, 250, 251, 0.3); /* brilho em volta do selecionado */
+  --dado-preco-fonte: var(--fonte-arial);    /* "R$ 1.097/mês" */
+  --dado-preco-tamanho: 1rem;
+  --dado-preco-peso: 300;
+  --dado-preco-caixa: uppercase;
 
-  /* ---------- CARD DO IMÓVEL ---------- */
-  --card-fundo: #ffffff;
-  --card-selo-fundo: #ece8e1;          /* selo sobre a foto (areia) */
-  --card-selo-texto: #1f2933;
-  --card-preco: #3e6a63;               /* valor do aluguel */
-
-  /* Botão "Detalhes" */
-  --detalhes-fundo: #1f2933;
-  --detalhes-texto: #ffffff;
-  --detalhes-hover-fundo: #4a7c74;
-  --detalhes-hover-texto: #ffffff;
-  --detalhes-brilho: rgba(74, 124, 116, 0.35);
-
-  /* ---------- SETAS E CONTADOR DO CARROSSEL ---------- */
-  --seta-fundo: rgba(255, 255, 255, 0.1);
-  --seta-borda: rgba(255, 255, 255, 0.35);
-  --seta-texto: #ffffff;
-  --seta-hover-fundo: #f3f4f6;
-  --seta-hover-texto: #1f2933;
-  --contador: rgba(255, 255, 255, 0.85);
-
-  /* ---------- MODAL DE DETALHES ---------- */
-  --modal-fundo: #ffffff;
-  --modal-fechar-fundo: rgba(0, 0, 0, 0.7);    /* botão × */
-  --modal-fechar-texto: #ffffff;
-  --galeria-fundo: #000000;                    /* atrás da foto grande */
-  --galeria-botao-fundo: rgba(0, 0, 0, 0.6);   /* setas e "Abrir imagem completa" sobre a foto */
-  --galeria-botao-texto: #ffffff;
-  --galeria-botao-hover-fundo: #f3f4f6;
-  --galeria-botao-hover-texto: #1f2933;
-  --miniaturas-fundo: #161a1d;                 /* faixa de miniaturas */
-  --miniatura-ativa: #a9c4bd;                  /* borda da miniatura selecionada */
-  --specs-fundo: #f7f6f3;                      /* caixa de área, valor, dormitórios... */
-  --specs-borda: #e8e4dc;
-  --mapa-fundo: #e5e7eb;                       /* cor enquanto o mapa carrega */
-
-  /* ---------- BOTÃO WHATSAPP ("Tenho Interesse") ---------- */
-  --whats-fundo: #25D366;
-  --whats-texto: #ffffff;
-  --whats-hover: #1ebe5d;
-  --whats-brilho: rgba(37, 211, 102, 0.3);
-
-  /* ---------- BOTÃO "COMPARTILHAR" ---------- */
-  --compartilhar-borda: #d1d5db;
-  --compartilhar-texto: #6b7280;
-  --compartilhar-hover-borda: #4a7c74;
-  --compartilhar-hover-texto: #1f2933;
-
-  /* ---------- IMÓVEL ALUGADO ---------- */
-  --alugado-selo-fundo: #9f3a38;
-  --alugado-selo-texto: #ffffff;
-  --alugado-aviso-fundo: #fbefee;
-  --alugado-aviso-texto: #7f2a28;
-
-  /* ---------- WHATSAPP FLUTUANTE (canto da tela) ---------- */
-  --zap-flut-fundo: #25D366;
-  --zap-flut-texto: #ffffff;
-  --zap-flut-hover: #1ebe5d;
-  --zap-flut-brilho: rgba(37, 211, 102, 0.4);
-
-  /* ---------- TELA CHEIA ---------- */
-  --lightbox-fundo: rgba(0, 0, 0, 0.95);
-  --voltar-fundo: rgba(255, 255, 255, 0.18);   /* botão "Voltar" */
-  --voltar-borda: rgba(255, 255, 255, 0.4);
-  --voltar-texto: #ffffff;
-  --voltar-hover-fundo: #f3f4f6;
-  --voltar-hover-texto: #1f2933;
-  --lb-miniatura-ativa: #a9c4bd;               /* miniatura selecionada na tela cheia */
-
-  /* ---------- RODAPÉ ---------- */
-  --rodape-fundo: #14181b;
-  --rodape-texto: #9ca3af;
-  --rodape-titulo: #ffffff;
-  --rodape-link-hover: #a9c4bd;
-  --rodape-borda: rgba(255, 255, 255, 0.08);
-  --rodape-copyright: #6b7280;
-
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* ----- ANIMAÇÃO ----- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);   /* curva suave usada nas transições */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Página inteira: coluna (cabeçalho, conteúdo, rodapé) com a foto de fundo escurecida */
+/* body = página inteira em coluna (cabeçalho, conteúdo, rodapé) com a foto de fundo escurecida.
+   Foto de fundo: troque o nome do arquivo na linha do url(). */
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'Outfit', 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
-  color: #fff;
   overflow-x: hidden;
-  background: linear-gradient(var(--fundo-foto-topo), var(--fundo-foto-base)),
-              url('Banners/Banner.jpg') center / cover no-repeat fixed var(--bg);
+  font-family: var(--fonte-times);
+  background: linear-gradient(#00000080, #00000080),
+              url('Banners/Banner.jpg') center / cover no-repeat fixed #030301;
 }
 
 /* Trava o scroll da página enquanto o modal ou a tela cheia estão abertos */
 body:has(dialog[open]) { overflow: hidden; }
 
 /* Botões sem o visual padrão do navegador */
-button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+button {
+  color: #551A8B;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
 
-/* dt = rótulo pequeno (ex.: "ÁREA"), dd = valor em negrito (ex.: "36m²") */
-dt { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--muted); }
-dd { font-weight: 700; }
+/* dt = rótulo (ex.: "ÁREA") | dd = valor (ex.: "36m²") | .preco = valor do aluguel */
+dt {
+  display: block;
+  font-family: var(--dado-rotulo-fonte);
+  font-size: var(--dado-rotulo-tamanho);
+  font-weight: var(--dado-rotulo-peso);
+  color: #1C1C1C;
+  text-transform: var(--dado-rotulo-caixa);
+}
+dd {
+  font-family: var(--dado-valor-fonte);
+  font-size: var(--dado-valor-tamanho);
+  font-weight: var(--dado-valor-peso);
+  color: #FF4500;
+  text-transform: var(--dado-valor-caixa);
+}
+.preco {
+  font-family: var(--dado-preco-fonte);
+  font-size: var(--dado-preco-tamanho);
+  font-weight: var(--dado-preco-peso);
+  color: #FF4500;
+  text-transform: var(--dado-preco-caixa);
+}
 
-/* .preco = valor do aluguel em dourado */
-.preco { color: var(--card-preco); }
+/* .vazio = mensagem de erro ou "nenhum imóvel encontrado" */
+.vazio { color: #FFE4C4; text-align: center; padding: 40px; }
 
 /* Animações de entrada: subir (de baixo p/ cima), descer (de cima p/ baixo), entrar (modal) */
 @keyframes subir  { from { opacity: 0; transform: translateY(20px); } }
@@ -133,46 +98,73 @@ dd { font-weight: 700; }
 @keyframes entrar { from { opacity: 0; transform: translateY(30px) scale(0.98); } }
 
 
-/* =====================================================
-   CABEÇALHO
-   ===================================================== */
+/* =========================================================================
+   3. CABEÇALHO
+   h1 = título "Kitnet Rio Claro" | h6 = frase "Imóveis compactos • Padrão superior"
+   ========================================================================= */
+:root {
+  /* TEXTO — título (h1) */
+  --h1-fonte: var(--fonte-times);
+  --h1-tamanho: clamp(4.2rem, 13.3vw, 6.4rem);
+  --h1-peso: 100;
+
+  /* TEXTO — frase abaixo do título (h6) */
+  --h6-fonte: var(--fonte-arial);
+  --h6-tamanho: clamp(1.3rem, 4.1vw, 1.95rem);
+  --h6-peso: 100;
+  --h6-decoracao: overline;   /* linha acima do texto; use "none" para tirar */
+
+  /* TAMANHOS */
+  --cabecalho-espaco: 60px 20px 25px;   /* topo, laterais, base */
+}
 
 header {
   text-align: center;
-  padding: 60px 20px 25px;
+  padding: var(--cabecalho-espaco);
   animation: descer 1s var(--ease) both;
 }
-
-/* .subtitle = frase pequena em letras espaçadas acima do título */
-.subtitle {
-  font-size: 0.9rem;
-  font-weight: 300;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--subtitulo);
-  margin-bottom: 10px;
-}
-
-/* h1 = título "Kit Net Rio Claro" (tamanho se adapta à tela) */
 h1 {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
-  color: var(--titulo);
-  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+  font-family: var(--h1-fonte);
+  font-size: var(--h1-tamanho);
+  font-weight: var(--h1-peso);
+  color: #FFFFFF;
+  text-shadow: 2px 2px 2px #00000080;
+}
+h6 {
+  font-family: var(--h6-fonte);
+  font-size: var(--h6-tamanho);
+  font-weight: var(--h6-peso);
+  text-decoration-line: var(--h6-decoracao);
+  color: #FFFFFF;
+  text-shadow: 2px 2px 2px #00000080;
 }
 
 
-/* =====================================================
-   FILTRO DE BAIRROS (miniaturas no topo)
-   ===================================================== */
+/* =========================================================================
+   4. BARRA DE BAIRROS (botões com foto para escolher o residencial)
+   ========================================================================= */
+:root {
+  /* TEXTO — nome sobre a foto */
+  --bairro-nome-fonte: var(--fonte-arial);
+  --bairro-nome-tamanho: 0.75rem;
+  --bairro-nome-peso: 100;
 
-/* .bairros = faixa que contém as miniaturas; quebra de linha automática */
+  /* TAMANHOS */
+  --bairro-largura: 170px;
+  --bairro-altura: 110px;
+  --bairro-borda-largura: 2px;
+  --bairro-raio: 10px;
+  --bairro-espaco-entre: 15px;
+  --bairros-largura-max: 950px;
+}
+
+/* .bairros = faixa que contém os botões; quebra de linha automática */
 .bairros {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 15px;
-  max-width: 950px;
+  gap: var(--bairro-espaco-entre);
+  max-width: var(--bairros-largura-max);
   margin: 0 auto 35px;
   padding: 0 20px;
   animation: subir 1s var(--ease) 0.2s both;
@@ -182,12 +174,12 @@ h1 {
 .thumb {
   position: relative;
   flex-shrink: 0;
-  width: 170px;
-  height: 110px;
+  width: var(--bairro-largura);
+  height: var(--bairro-altura);
   overflow: hidden;
-  border: 3px solid var(--bairro-borda);
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: var(--bairro-borda-largura) solid #FFFFFF1A;
+  border-radius: var(--bairro-raio);
+  box-shadow: 0 2px 2px #0000004D;
   transition: transform 0.8s var(--ease), border-color 0.8s var(--ease), box-shadow 0.8s var(--ease);
   animation: subir 0.8s ease var(--d) backwards;
 }
@@ -198,39 +190,96 @@ h1 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 20%, rgba(0, 0, 0, 0.75));
+  background: linear-gradient(180deg, #0000001A 20%, #00000080);   /* escurece a foto para o nome ficar legível */
 }
 
-/* Nome do bairro, no rodapé da miniatura */
+/* Nome do bairro, no rodapé do botão */
 .thumb span {
   position: absolute;
   inset: auto 10px 10px;
   z-index: 1;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--bairro-nome);
+  font-family: var(--bairro-nome-fonte);
+  font-size: var(--bairro-nome-tamanho);
+  font-weight: var(--bairro-nome-peso);
+  color: #FFFFFF;
+  text-shadow: 1px 1px 1px #000000;
 }
 
-/* Efeito ao passar o mouse */
-.thumb:hover { transform: scale(1.08); z-index: 5; border-color: var(--bairro-borda-hover); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); }
+/* Botão ao passar o mouse */
+.thumb:hover { transform: scale(1.08); z-index: 5; border-color: #FFFFFF; box-shadow: 0 3px 3px #FFD7004D; }
 
-/* .active = bairro selecionado no momento (borda dourada) */
-.thumb.active { transform: scale(1.04); border-color: var(--bairro-borda-ativo); box-shadow: 0 12px 30px var(--bairro-brilho-ativo); }
+/* Botão do bairro selecionado */
+.thumb.active { transform: scale(1.04); border-color: #FFFFFFCC; box-shadow: 0 3px 3px #FFD70080; }
 
 
-/* =====================================================
-   CARROSSEL DE IMÓVEIS
-   ===================================================== */
+/* =========================================================================
+   5. CARROSSEL E CARD DO IMÓVEL
+   ========================================================================= */
+:root {
+  /* TAMANHOS — palco e card */
+  --stage-altura: 700px;              /* altura do palco: precisa caber o card inteiro (foto 3:2 + textos) */
+  --stage-largura-max: 1200px;
+  --card-largura: 680px;
+  --card-foto-proporcao: 3 / 2;       /* padrão das fotos: 3000x2000 */
+  --card-raio: 15px;
+  --card-espaco: 15px 20px;           /* espaço interno do texto (topo/base, laterais) */
+  --card-lateral-escala: 0.8;         /* tamanho dos cards ao lado do central */
+  --card-lateral-escala-hover: 0.85;  /* tamanho do card lateral ao passar o mouse */
+  --card-lateral-opacidade: 0.5;      /* transparência dos cards ao lado (1 = sem transparência) */
+
+  /* TEXTO — selo sobre a foto (ex.: "GARAGEM + IPTU INCLUÍDOS") */
+  --selo-fonte: var(--fonte-arial);
+  --selo-tamanho: 0.8rem;
+  --selo-peso: 100;
+  --selo-caixa: uppercase;
+  --selo-posicao: 30px;               /* distância do canto superior direito da foto */
+  --selo-espaco: 8px 16px;
+  --selo-raio: 25px;
+
+  /* TEXTO — título do card */
+  --card-titulo-fonte: var(--fonte-arial);
+  --card-titulo-tamanho: 1.5rem;
+  --card-titulo-peso: bold;
+  --card-titulo-espaco: 10px;         /* distância até o endereço */
+
+  /* TEXTO — endereço e descrição (usados também no modal) */
+  --endereco-fonte: var(--fonte-times);
+  --endereco-tamanho: 1rem;
+  --endereco-peso: normal;
+  --endereco-espaco: 5px;
+
+  --descricao-fonte: var(--fonte-times);
+  --descricao-tamanho: 1rem;
+  --descricao-peso: normal;
+  --descricao-altura-linha: 1.5;
+  --descricao-espaco: 15px;
+
+  /* TEXTO — botão "Detalhes" */
+  --detalhes-fonte: var(--fonte-arial);
+  --detalhes-tamanho: 15px;
+  --detalhes-peso: 100;
+  --detalhes-espaco: 5px 20px;
+  --detalhes-raio: 20px;
+
+  /* TAMANHOS — rodapé do card ("Área / Aluguel" + botão) */
+  --info-espaco-entre: 15px;
+}
 
 /* main = área central; empurra o rodapé para baixo */
-main { flex: 1; display: flex; flex-direction: column; align-items: center; padding-bottom: 40px; }
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 40px;
+}
 
 /* .stage = palco onde os cards ficam lado a lado. Permite arrastar com o dedo/mouse */
 .stage {
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  height: 600px;
+  max-width: var(--stage-largura-max);
+  height: var(--stage-altura);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -240,18 +289,16 @@ main { flex: 1; display: flex; flex-direction: column; align-items: center; padd
 }
 .stage:active { cursor: grabbing; }
 
-/* .vazio = mensagem de erro ou "nenhum imóvel encontrado" */
-.vazio { color: #b5aca3; text-align: center; padding: 40px; }
-
-/* .card = cartão branco de cada imóvel. A posição (centro/lados) vem das classes is-* abaixo */
+/* .card = cartão de cada imóvel. Um toque em qualquer parte do card central abre os detalhes.
+   A posição (centro/lados) vem das classes is-* abaixo */
 .card {
   position: absolute;
-  width: 680px;
+  width: var(--card-largura);
   overflow: hidden;
-  background: var(--card-fundo);
-  color: var(--ink);
-  border-radius: 24px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  background: #FFFFFF;
+  color: #1C1C1C;
+  border-radius: var(--card-raio);
+  box-shadow: 0 6px 6px #00000080;
   cursor: pointer;
   transition: transform 0.8s var(--ease), opacity 0.8s var(--ease);
 }
@@ -260,40 +307,72 @@ main { flex: 1; display: flex; flex-direction: column; align-items: center; padd
    is-active = card do centro | is-prev / is-next = cards laterais menores e esmaecidos
    is-hidden = card escondido (quando há mais de 3 imóveis) */
 .is-active { z-index: 10; }
-.is-prev, .is-next { z-index: 5; opacity: 0.55; }
-.is-prev { transform: translateX(-65%) scale(0.82); }
-.is-next { transform: translateX(65%) scale(0.82); }
-.is-prev:hover { transform: translateX(-62%) scale(0.85); opacity: 0.8; }
-.is-next:hover { transform: translateX(62%) scale(0.85); opacity: 0.8; }
+.is-prev, .is-next { z-index: 3; opacity: var(--card-lateral-opacidade); }
+/* Os cards laterais ficam ENCOSTADOS no meio do card central: a borda de dentro do
+   lateral coincide com o centro do card do meio (que fica na frente e cobre a metade dele).
+   Fórmula: deslocamento = escala x 50% da largura do card. Mudou a escala, a posição acompanha. */
+.is-prev { transform: translateX(calc(var(--card-lateral-escala) * -50%)) scale(var(--card-lateral-escala)); }
+.is-next { transform: translateX(calc(var(--card-lateral-escala) * 50%)) scale(var(--card-lateral-escala)); }
+.is-prev:hover { transform: translateX(calc(var(--card-lateral-escala-hover) * -50%)) scale(var(--card-lateral-escala-hover)); opacity: 0.8; }
+.is-next:hover { transform: translateX(calc(var(--card-lateral-escala-hover) * 50%)) scale(var(--card-lateral-escala-hover)); opacity: 0.8; }
 .is-hidden { opacity: 0; transform: scale(0.6); pointer-events: none; }
 
-/* .card-img = foto de capa do imóvel (dá um leve zoom ao passar o mouse) */
-.card-img { position: relative; height: 340px; overflow: hidden; }
-.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+/* .card-img = banner do card: sempre na proporção das fotos (3:2), com leve zoom ao passar o mouse */
+.card-img {
+  position: relative;
+  aspect-ratio: var(--card-foto-proporcao);
+  overflow: hidden;
+}
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
 .card:hover .card-img img { transform: scale(1.04); }
 
-/* .badge = selo dourado no canto da foto (ex.: "IPTU + Água Incluído") */
+/* .badge = selo no canto da foto */
 .badge {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 8px 16px;
-  background: var(--card-selo-fundo);
-  color: var(--card-selo-texto);
-  border-radius: 50px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  top: var(--selo-posicao);
+  right: var(--selo-posicao);
+  padding: var(--selo-espaco);
+  background: #00000080;
+  border-radius: var(--selo-raio);
+  font-family: var(--selo-fonte);
+  font-size: var(--selo-tamanho);
+  font-weight: var(--selo-peso);
+  color: #FFFFFFCC;
+  text-transform: var(--selo-caixa);
 }
 
 /* .card-body = parte de texto do card, abaixo da foto */
-.card-body { padding: 25px 30px; }
+.card-body { padding: var(--card-espaco); }
 
-/* h3 = título do card | h2 = título do modal | .endereco e .descricao servem aos dois */
-h3, h2 { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 1.8rem; margin-bottom: 4px; }
-.endereco { font-size: 0.95rem; color: var(--muted); margin-bottom: 15px; }
-.descricao { font-size: 0.95rem; line-height: 1.5; color: var(--texto-descricao); margin-bottom: 20px; }
+.card-body h3 {
+  font-family: var(--card-titulo-fonte);
+  font-size: var(--card-titulo-tamanho);
+  font-weight: var(--card-titulo-peso);
+  color: #1C1C1C;
+  margin-bottom: var(--card-titulo-espaco);
+}
+
+/* .endereco e .descricao servem ao card e ao modal */
+.endereco {
+  font-family: var(--endereco-fonte);
+  font-size: var(--endereco-tamanho);
+  font-weight: var(--endereco-peso);
+  color: #1C1C1C;
+  margin-bottom: var(--endereco-espaco);
+}
+.descricao {
+  font-family: var(--descricao-fonte);
+  font-size: var(--descricao-tamanho);
+  font-weight: var(--descricao-peso);
+  line-height: var(--descricao-altura-linha);
+  color: #1C1C1C;
+  margin-bottom: var(--descricao-espaco);
+}
 
 /* .card-footer = linha inferior do card: área + aluguel à esquerda, botão à direita */
 .card-footer {
@@ -303,63 +382,145 @@ h3, h2 { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; fon
   flex-wrap: wrap;
   gap: 15px;
   padding-top: 15px;
-  border-top: 1px solid var(--line);
+  border-top: 2px solid #FFA500;   /* linha divisória acima de "Área / Aluguel" */
 }
 
-/* .info = bloco "Área" e "Aluguel" */
-.info { display: flex; gap: 25px; }
-.info dd { font-size: 1.1rem; }
-.info .preco { font-size: 1.5rem; }
+/* .info = bloco "Área" e "Aluguel" (textos: ver "TEXTO DOS DADOS" na base) */
+.info { display: flex; gap: var(--info-espaco-entre); }
 
-/* .btn-detalhes = botão preto "Detalhes" (fica dourado ao passar o mouse) */
+/* .btn-detalhes = botão "Detalhes" */
 .btn-detalhes {
-  padding: 12px 28px;
-  background: var(--detalhes-fundo);
-  color: var(--detalhes-texto);
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  padding: var(--detalhes-espaco);
+  background: #828282;
+  color: #FFFFFF;
+  border-radius: var(--detalhes-raio);
+  font-family: var(--detalhes-fonte);
+  font-size: var(--detalhes-tamanho);
+  font-weight: var(--detalhes-peso);
   transition: all 0.8s var(--ease);
 }
-.btn-detalhes:hover { background: var(--detalhes-hover-fundo); color: var(--detalhes-hover-texto); transform: translateY(-2px); box-shadow: 0 6px 20px var(--detalhes-brilho); }
+.btn-detalhes:hover { background: #CFCFCF; color: #828282; }
+
+/* Imóvel alugado: foto em preto e branco e selo de outra cor */
+.card-img.alugado img { filter: grayscale(1) brightness(0.85); }
+.badge.badge-alugado { background: #8B3A3A; color: #FFFFFF; }
+
+
+/* =========================================================================
+   6. SETAS E CONTADOR DO CARROSSEL
+   ========================================================================= */
+:root {
+  /* TEXTO — contador "1 / 5 imóveis" */
+  --contador-fonte: var(--fonte-times);
+  --contador-tamanho: 0.9rem;
+  --contador-peso: 500;
+
+  /* TAMANHOS */
+  --seta-tamanho: 44px;
+  --controles-espaco-entre: 10px;
+}
 
 /* .controles = linha abaixo do carrossel com as setas e o contador */
-.controles { display: flex; align-items: center; justify-content: center; gap: 20px; margin-top: 15px; font-size: 0.9rem; font-weight: 500; color: var(--contador); }
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--controles-espaco-entre);
+  margin-top: 10px;
+  font-family: var(--contador-fonte);
+  font-size: var(--contador-tamanho);
+  font-weight: var(--contador-peso);
+  color: #FFFFFFD9;
+}
 
 /* .seta = botão redondo de anterior/próximo */
 .seta {
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--seta-borda);
+  width: var(--seta-tamanho);
+  height: var(--seta-tamanho);
+  border: 1px solid #FFFFFF4D;
   border-radius: 50%;
-  background: var(--seta-fundo);
-  color: var(--seta-texto);
+  background: #0000004D;
+  color: #FFFFFF;
   transition: all 0.8s var(--ease);
 }
-.seta:hover { background: var(--seta-hover-fundo); border-color: var(--seta-hover-fundo); color: var(--seta-hover-texto); transform: scale(1.08); }
+.seta:hover {
+  background: #E8E8E8;
+  border-color: #E8E8E8;
+  color: #1C1C1C;
+  transform: scale(1.08);
+}
 
 
-/* =====================================================
-   MODAL DE DETALHES (<dialog id="modal">)
-   ===================================================== */
+/* =========================================================================
+   7. MODAL DE DETALHES (<dialog id="modal">)
+   ========================================================================= */
+:root {
+  /* TAMANHOS — janela */
+  --modal-largura-max: 850px;
+  --modal-altura-max: 90vh;
+  --modal-raio: 24px;
+  --modal-espaco: 30px;               /* espaço interno da parte de texto */
 
-/* Estilo base de toda janela <dialog> (modal e lightbox) */
+  /* TAMANHOS — botão × (fechar) */
+  --fechar-tamanho-fonte: 1.2rem;
+
+  /* TAMANHOS — galeria (foto grande, padrão 3:2) */
+  --galeria-proporcao: 3 / 2;
+  --galeria-altura-max: 60vh;
+
+  /* TAMANHOS — setas e "Abrir imagem completa" sobre a foto */
+  --nav-tamanho: 40px;
+  --ampliar-tamanho-fonte: 0.8rem;
+
+  /* TAMANHOS — faixa de miniaturas */
+  --miniatura-largura: 70px;
+  --miniatura-altura: 52px;
+
+  /* TEXTO — título do modal e "Localização" */
+  --modal-titulo-fonte: var(--fonte-arial);
+  --modal-titulo-tamanho: 1.5rem;
+  --modal-titulo-peso: bold;
+  --modal-titulo-espaco: 10px;
+
+  --mapa-titulo-fonte: var(--fonte-arial);
+  --mapa-titulo-tamanho: 1.2rem;
+  --mapa-titulo-peso: bold;
+
+  /* TAMANHOS — caixa de dados (área, valor, dormitórios...) e mapa */
+  --specs-raio: 16px;
+  --mapa-altura: 300px;
+
+  /* TEXTO — botão "Compartilhar" */
+  --compartilhar-fonte: var(--fonte-arial);
+  --compartilhar-tamanho: 0.85rem;
+  --compartilhar-peso: 600;
+
+  /* TEXTO — botão WhatsApp ("Tenho Interesse") */
+  --whats-fonte: var(--fonte-times);
+  --whats-tamanho: 1rem;
+  --whats-peso: 700;
+
+  /* TEXTO — aviso "imóvel alugado" */
+  --alugado-aviso-peso: 600;
+}
+
+/* Estilo base de toda janela <dialog> (modal e tela cheia) */
 dialog {
   width: 100%;
-  max-width: 850px;
-  max-height: 90vh;
+  max-width: var(--modal-largura-max);
+  max-height: var(--modal-altura-max);
   margin: auto;
   overflow-y: auto;
   border: 0;
-  border-radius: 24px;
-  background: var(--modal-fundo);
-  color: var(--ink);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  border-radius: var(--modal-raio);
+  background: #FFFFFF;
+  color: #008B00;
+  box-shadow: 0 30px 60px #00000080;
 }
 dialog[open] { animation: entrar 0.6s var(--ease); }
 
 /* ::backdrop = fundo escuro desfocado atrás da janela */
-dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12px); }
+dialog::backdrop { background: #1C1C1CD9; backdrop-filter: blur(12px); }
 
 /* .fechar = botão "×" no canto superior direito do modal */
 .fechar {
@@ -370,22 +531,23 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--modal-fechar-fundo);
-  color: var(--modal-fechar-texto);
-  font-size: 1.2rem;
+  background: #000000B2;
+  color: #FFFFFF;
+  font-size: var(--fechar-tamanho-fonte);
 }
 
-/* Botões escuros do modal ficam dourados ao passar o mouse */
-.fechar:hover, .nav:hover, .ampliar:hover { background: var(--galeria-botao-hover-fundo); color: var(--galeria-botao-hover-texto); }
+/* Botões escuros sobre a foto: cor ao passar o mouse */
+.fechar:hover, .nav:hover, .ampliar:hover { background: #E8E8E8; color: #1C1C1C; }
 
-/* .galeria = área da foto grande no topo do modal (fundo preto) */
+/* .galeria = área da foto grande no topo do modal (proporção 3:2, fundo preto) */
 .galeria {
   position: relative;
-  height: 420px;
+  aspect-ratio: var(--galeria-proporcao);
+  max-height: var(--galeria-altura-max);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--galeria-fundo);
+  background: #000000;
   cursor: pointer;
 }
 .galeria > img { max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -395,11 +557,11 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: var(--nav-tamanho);
+  height: var(--nav-tamanho);
   border-radius: 50%;
-  background: var(--galeria-botao-fundo);
-  color: var(--galeria-botao-texto);
+  background: #00000080;
+  color: #1C1C1C;
 }
 .prev { left: 15px; }
 .next { right: 15px; }
@@ -410,11 +572,11 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   bottom: 15px;
   right: 15px;
   padding: 6px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid #FFFFFF4D;
   border-radius: 20px;
-  background: var(--galeria-botao-fundo);
-  color: var(--galeria-botao-texto);
-  font-size: 0.8rem;
+  background: #00000080;
+  color: #FF0000;
+  font-size: var(--ampliar-tamanho-fonte);
 }
 
 /* .miniaturas = faixa de fotos pequenas abaixo da galeria; .active = foto exibida agora */
@@ -424,12 +586,12 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   gap: 12px;
   padding: 15px 20px;
   overflow-x: auto;
-  background: var(--miniaturas-fundo);
+  background: #1C1C1C;
 }
 .miniaturas img {
   flex-shrink: 0;
-  width: 70px;
-  height: 52px;
+  width: var(--miniatura-largura);
+  height: var(--miniatura-altura);
   object-fit: cover;
   border: 2px solid transparent;
   border-radius: 8px;
@@ -437,39 +599,74 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   cursor: pointer;
   transition: opacity 0.4s var(--ease);
 }
-.miniaturas img:hover, .miniaturas img.active { opacity: 1; border-color: var(--miniatura-ativa); }
+.miniaturas img:hover, .miniaturas img.active { opacity: 1; border-color: #9BCD9B; }
 
-/* .modal-info = parte de texto do modal (título, descrição, specs, botão) */
-.modal-info { padding: 30px; }
+/* .modal-info = parte de texto do modal (título, descrição, dados, mapa, botões) */
+.modal-info { padding: var(--modal-espaco); }
 
-/* .specs = caixa cinza com área, valor, dormitórios, banheiros e IPTU */
+.modal-info h2 {
+  font-family: var(--modal-titulo-fonte);
+  font-size: var(--modal-titulo-tamanho);
+  font-weight: var(--modal-titulo-peso);
+  color: #1C1C1C;
+  margin-bottom: var(--modal-titulo-espaco);
+}
+
+/* .specs = caixa com área, valor, dormitórios, banheiros e IPTU (textos: ver "TEXTO DOS DADOS") */
 .specs {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 15px;
   margin: 20px 0;
   padding: 20px;
-  background: var(--specs-fundo);
-  border: 1px solid var(--specs-borda);
-  border-radius: 16px;
+  background: #FFFFF0;
+  border: 1px solid #EEEEE0;
+  border-radius: var(--specs-raio);
 }
 
-/* .mapa-titulo = título "Localização" e .mapa = mapa do Google (iframe) abaixo das specs */
-.mapa-titulo { font-size: 1.2rem; margin: 25px 0 12px; }
-.mapa { display: block; width: 100%; height: 300px; border: 0; border-radius: 16px; background: var(--mapa-fundo); }
+/* .mapa-titulo = título "Localização" | .mapa = mapa (iframe) abaixo das specs */
+.mapa-titulo {
+  font-family: var(--mapa-titulo-fonte);
+  font-size: var(--mapa-titulo-tamanho);
+  font-weight: var(--mapa-titulo-peso);
+  color: #1C1C1C;
+  margin: 25px 0 12px;
+}
+.mapa {
+  display: block;
+  width: 100%;
+  height: var(--mapa-altura);
+  border: 0;
+  border-radius: var(--specs-raio);
+  background: #E8E8E8;   /* cor enquanto o mapa carrega */
+}
 
 /* .acoes = bloco de botões do modal (WhatsApp e compartilhar), um embaixo do outro */
 .acoes { display: grid; gap: 12px; margin-top: 25px; }
 .acoes .btn-whatsapp { margin-top: 0; }
 
 /* .btn-compartilhar = botão discreto "Compartilhar este imóvel" */
-.btn-compartilhar { padding: 12px; border: 1px solid var(--compartilhar-borda); border-radius: 50px; color: var(--compartilhar-texto); font-weight: 600; transition: all 0.4s var(--ease); }
-.btn-compartilhar:hover { border-color: var(--compartilhar-hover-borda); color: var(--compartilhar-hover-texto); }
+.btn-compartilhar {
+  padding: 12px;
+  border: 1px solid #CFCFCF;
+  border-radius: 50px;
+  font-family: var(--compartilhar-fonte);
+  font-size: var(--compartilhar-tamanho);
+  font-weight: var(--compartilhar-peso);
+  color: #696969;
+  transition: all 0.4s var(--ease);
+}
+.btn-compartilhar:hover { border-color: #53868B; color: #1C1C1C; }
 
-/* Imóvel alugado: foto em preto e branco, selo vermelho e aviso no modal */
-.card-img.alugado img { filter: grayscale(1) brightness(0.85); }
-.badge.badge-alugado { background: var(--alugado-selo-fundo); color: var(--alugado-selo-texto); }
-.aviso-alugado { padding: 12px 16px; background: var(--alugado-aviso-fundo); color: var(--alugado-aviso-texto); border-radius: 12px; font-weight: 600; text-align: center; }
+/* .aviso-alugado = faixa "Este imóvel está alugado no momento" */
+.aviso-alugado {
+  padding: 12px 16px;
+  background: #FFE4E1;
+  color: #8B3A3A;
+  border-radius: 12px;
+  font-weight: var(--alugado-aviso-peso);
+  text-align: center;
+}
 
 /* .btn-whatsapp = botão verde "Tenho Interesse" */
 .btn-whatsapp {
@@ -477,20 +674,31 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   justify-content: center;
   margin-top: 25px;
   padding: 14px 28px;
-  background: var(--whats-fundo);
-  color: var(--whats-texto);
+  background: #00CD66;
+  color: #FFFFFF;
   border-radius: 50px;
-  font-weight: 700;
-  text-decoration: none;
-  box-shadow: 0 4px 15px var(--whats-brilho);
+  font-family: var(--whats-fonte);
+  font-size: var(--whats-tamanho);
+  font-weight: var(--whats-peso);
+  box-shadow: 0 4px 15px #00CD664D;
   transition: all 0.8s var(--ease);
 }
-.btn-whatsapp:hover { background: var(--whats-hover); transform: translateY(-2px); }
+.btn-whatsapp:hover { background: #008B45; transform: translateY(-2px); }
 
 
-/* =====================================================
-   TELA CHEIA (<dialog id="lightbox">)
-   ===================================================== */
+/* =========================================================================
+   8. TELA CHEIA (<dialog id="lightbox">)
+   ========================================================================= */
+:root {
+
+  /* TAMANHOS */
+  --lb-miniatura-largura: 90px;
+  --lb-miniatura-altura: 66px;
+  --lb-palco-espaco: 70px 60px 10px;   /* espaço em volta da foto grande (topo, laterais, base) */
+
+  /* TEXTO — botão "Voltar" */
+  --voltar-peso: 600;
+}
 
 /* Ocupa a tela toda em coluna: foto grande em cima, mini carrossel embaixo.
    Clicar no fundo ou em "Voltar" fecha */
@@ -499,19 +707,43 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   max-height: none;
   height: 100%;
   border-radius: 0;
-  background: var(--lightbox-fundo);
+  background: #000000F2;
 }
 /* display:flex só quando aberto (senão a janela nunca fecharia) */
 #lightbox[open] { display: flex; flex-direction: column; }
 
 /* .lb-palco = área da foto grande, com as setas laterais (.nav) */
-.lb-palco { position: relative; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 70px 60px 10px; }
+.lb-palco {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--lb-palco-espaco);
+}
 #lightbox img#lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
 
-/* .lb-miniaturas = mini carrossel de fotos abaixo da foto grande (reaproveita o estilo das miniaturas do modal) */
-.lb-miniaturas { display: flex; justify-content: safe center; gap: 12px; padding: 15px 20px 25px; overflow-x: auto; }
-.lb-miniaturas img { flex-shrink: 0; width: 90px; height: 66px; object-fit: cover; border: 2px solid transparent; border-radius: 8px; opacity: 0.55; cursor: pointer; transition: opacity 0.4s var(--ease); }
-.lb-miniaturas img:hover, .lb-miniaturas img.active { opacity: 1; border-color: var(--lb-miniatura-ativa); }
+/* .lb-miniaturas = mini carrossel de fotos abaixo da foto grande */
+.lb-miniaturas {
+  display: flex;
+  justify-content: safe center;
+  gap: 12px;
+  padding: 15px 20px 25px;
+  overflow-x: auto;
+}
+.lb-miniaturas img {
+  flex-shrink: 0;
+  width: var(--lb-miniatura-largura);
+  height: var(--lb-miniatura-altura);
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.4s var(--ease);
+}
+.lb-miniaturas img:hover, .lb-miniaturas img.active { opacity: 1; border-color: #9BCD9B; }
 
 /* .unica = imóvel com 1 foto só: sem setas nem miniaturas */
 #lightbox.unica .nav, #lightbox.unica .lb-miniaturas { display: none; }
@@ -522,26 +754,41 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.85); backdrop-filter: blur(12p
   top: 25px;
   right: 25px;
   padding: 10px 20px;
-  border: 1px solid var(--voltar-borda);
+  border: 1px solid #FFFFFF66;
   border-radius: 30px;
-  background: var(--voltar-fundo);
-  color: var(--voltar-texto);
-  font-weight: 600;
+  background: #FFFFFF2E;
+  color: #FFFFFF;
+  font-weight: var(--voltar-peso);
 }
-.voltar:hover { background: var(--voltar-hover-fundo); color: var(--voltar-hover-texto); }
+.voltar:hover { background: #E8E8E8; color: #1C1C1C; }
 
 
-/* =====================================================
-   RODAPÉ
-   ===================================================== */
+/* =========================================================================
+   9. RODAPÉ
+   ========================================================================= */
+:root {
+  /* TEXTO — títulos das colunas (h4) */
+  --rodape-titulo-fonte: var(--fonte-arial);
+  --rodape-titulo-tamanho: 1.2rem;
+  --rodape-titulo-peso: 100;
+
+  /* TEXTO — textos, botões de documentos (PDF) e copyright */
+  --rodape-texto-fonte: var(--fonte-arial);
+  --rodape-texto-tamanho: 0.8rem;
+  --rodape-texto-peso: 100;
+
+  /* TAMANHOS */
+  --rodape-tamanho-base: 0.9rem;
+  --rodape-espaco: 30px 20px 80px;            /* a base maior evita que o WhatsApp flutuante cubra o texto */
+  --rodape-largura-max: 950px;
+}
 
 footer {
   margin-top: 60px;
-  padding: 50px 20px 20px;
-  background: var(--rodape-fundo);
-  color: var(--rodape-texto);
-  font-size: 0.9rem;
-  border-top: 1px solid var(--rodape-borda);
+  padding: var(--rodape-espaco);
+  background: #1C1C1C;
+  color: #828282;
+  font-size: var(--rodape-tamanho-base);
 }
 
 /* .footer-grid = as 3 colunas (viram 1 coluna no celular automaticamente) */
@@ -549,57 +796,93 @@ footer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 30px;
-  max-width: 950px;
+  max-width: var(--rodape-largura-max);
   margin: 0 auto;
   padding-bottom: 30px;
-  border-bottom: 1px solid var(--rodape-borda);
 }
-footer h4 { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; font-size: 1.25rem; color: var(--rodape-titulo); margin-bottom: 15px; }
-footer p, footer a { display: block; margin-bottom: 8px; color: inherit; text-decoration: none; }
-footer a:hover { color: var(--rodape-link-hover); }
+footer h4 {
+  font-family: var(--rodape-titulo-fonte);
+  font-size: var(--rodape-titulo-tamanho);
+  font-weight: var(--rodape-titulo-peso);
+  color: #CFCFCF;
+  margin-bottom: 15px;
+}
 
-/* Espaço extra no fim do rodapé para o botão flutuante do WhatsApp não cobrir o texto */
-footer { padding-bottom: 80px; }
+/* .doc = botões de documentos (PDF) do rodapé, com o mesmo visual dos textos */
+footer p, footer .doc {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--rodape-texto-fonte);
+  font-size: var(--rodape-texto-tamanho);
+  font-weight: var(--rodape-texto-peso);
+  color: #828282;
+}
+footer .doc { padding: 0; text-align: left; }
+footer .doc:hover { color: #FFFFFF; }
 
 /* .copyright = linha final centralizada */
-.copyright { text-align: center; padding-top: 25px; font-size: 0.85rem; color: var(--rodape-copyright); }
+.copyright {
+  text-align: center;
+  padding-top: 25px;
+  font-size: var(--rodape-texto-tamanho);
+  color: #828282;
+}
 
 
-/* =====================================================
-   BOTÃO FLUTUANTE DO WHATSAPP
-   ===================================================== */
+/* =========================================================================
+   10. BOTÃO FLUTUANTE DO WHATSAPP (canto inferior direito)
+   ========================================================================= */
+:root {
+  /* TEXTO */
+  --zap-flut-fonte: var(--fonte-times);
+  --zap-flut-tamanho: 1rem;
+  --zap-flut-peso: 700;
 
-/* .zap-flutuante = pílula verde fixa no canto inferior direito */
+  /* TAMANHOS */
+  --zap-flut-distancia: 20px;            /* distância das bordas da tela */
+  --zap-flut-espaco: 14px 20px;
+}
+
 .zap-flutuante {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: var(--zap-flut-distancia);
+  bottom: var(--zap-flut-distancia);
   z-index: 50;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 20px;
-  background: var(--zap-flut-fundo);
-  color: var(--zap-flut-texto);
+  padding: var(--zap-flut-espaco);
+  background: #00CD66;
+  color: #FFFFFF;
   border-radius: 50px;
-  font-weight: 700;
-  text-decoration: none;
-  box-shadow: 0 8px 25px var(--zap-flut-brilho);
+  font-family: var(--zap-flut-fonte);
+  font-size: var(--zap-flut-tamanho);
+  font-weight: var(--zap-flut-peso);
+  box-shadow: 0 8px 25px #00CD6666;
   transition: all 0.8s var(--ease);
 }
-.zap-flutuante:hover { background: var(--zap-flut-hover); transform: translateY(-3px); }
-.zap-flutuante[hidden] { display: none; } /* aparece só depois que o JS preenche o link */
+.zap-flutuante:hover { background: #008B45; transform: translateY(-3px); }
+.zap-flutuante[hidden] { display: none; }   /* aparece só depois que o JS preenche o link */
 
 
-/* =====================================================
-   CELULAR / TELAS PEQUENAS (até 850px)
-   ===================================================== */
-
+/* =========================================================================
+   11. CELULAR / TELAS PEQUENAS (até 850px)
+   Aqui só mudam os valores das variáveis e o comportamento do carrossel.
+   ========================================================================= */
 @media (max-width: 850px) {
-  header { padding: 30px 15px 15px; }
-
-  /* Bairros: miniaturas menores que quebram para a linha de baixo (sem barra de rolagem) */
-  .thumb { width: 140px; height: 95px; }
+  :root {
+    --cabecalho-espaco: 30px 15px 15px;
+    --bairro-largura: 140px;                  /* bairros ficam menores e quebram para a linha de baixo */
+    --bairro-altura: 95px;
+    --card-espaco: 20px;
+    --card-titulo-tamanho: 1.4rem;
+    --modal-altura-max: 95vh;
+    --galeria-altura-max: 50vh;
+    --mapa-altura: 250px;
+    --lb-palco-espaco: 70px 10px 10px;
+    --lb-miniatura-largura: 70px;
+    --lb-miniatura-altura: 52px;
+  }
 
   /* Carrossel: só o card ativo aparece, ocupando a largura da tela */
   .stage { height: auto; min-height: 520px; }
@@ -607,18 +890,10 @@ footer { padding-bottom: 80px; }
   .is-prev, .is-next, .is-hidden { display: none; }
   .is-active { transform: none; }
 
-  /* Card: foto e textos mais compactos, botão "Detalhes" em largura total */
-  .card-img { height: 250px; }
-  .card-body { padding: 20px; }
-  h3 { font-size: 1.4rem; }
+  /* Card: botão "Detalhes" em largura total */
   .card-footer { flex-direction: column; align-items: stretch; }
   .btn-detalhes { width: 100%; }
 
-  /* Modal: galeria mais baixa e specs em 2 colunas */
-  dialog { max-height: 95vh; }
-  .galeria { height: 280px; }
-  .mapa { height: 250px; }
-  .lb-palco { padding: 70px 10px 10px; }
-  .lb-miniaturas img { width: 70px; height: 52px; }
+  /* Modal: dados em 2 colunas */
   .specs { grid-template-columns: repeat(2, 1fr); }
 }

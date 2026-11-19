@@ -6,18 +6,16 @@
   <title>Kit Net Rio Claro — Kitnets e studios para alugar</title>
   <meta name="description" content="Locação de imóveis compactos e bem localizados em Rio Claro - SP.">
 
-  <!-- FONTES: o site usa Playfair Display (títulos) e Outfit (textos) se estiverem disponíveis;
-       senão, usa fontes padrão do aparelho (Georgia e Segoe UI). Nada é baixado de sites externos. -->
-
-  <!-- ESTILOS: style.css tem a PARTE 1 (cores) e a PARTE 2 (layout e animações) -->
+  <!-- ESTILOS: style.css é o único arquivo de estilo (cores, textos, tamanhos e layout, organizados por área).
+       Nenhuma fonte ou arquivo é baixado de sites externos. -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- CABEÇALHO: frase pequena (.subtitle) + título principal (h1) -->
   <header>
-    <p class="subtitle">Imóveis compactos • Bem localizados</p>
-    <h1>Kit Net Rio Claro</h1>
+  <h1>Kitnet Rio Claro</h1>
+  <h6>IMÓVEIS COMPACTOS &bull; PADRÃO SUPERIOR</h6>
   </header>
 
   <!-- FILTRO DE BAIRROS: o script.js cria aqui os botões (.thumb) com a foto de cada residencial -->
@@ -66,28 +64,20 @@
         <p>Telefone / WhatsApp: (19) 98171-0010</p>
         <p>E-mail: kitnetrioclaro@gmail.com</p>
       </div>
+      
       <div>
         <h4>Documentos Úteis</h4>
-        <a href="Documentos/Cadastro-de-Locacao.pdf" target="_blank" rel="noopener">Baixar Cadastro de Locação (PDF)</a>
-        <a href="Documentos/Contrato-de-Locacao-Marrocos.pdf" target="_blank" rel="noopener">Baixar Contrato de Locação — Marrocos (PDF)</a>
+        <!-- Botões .doc: abrem o PDF em outra aba (o caminho fica em data-url, sem href) -->
+        <button class="doc" data-url="Documentos/Cadastro-de-Locacao.pdf">Baixar Cadastro de Locação (PDF)</button>
+        <button class="doc" data-url="Documentos/Contrato-de-Locacao-Marrocos.pdf">Baixar Contrato de Locação — Marrocos (PDF)</button>
       </div>
     </div>
     <!-- #ano é preenchido automaticamente com o ano atual pelo script.js -->
     <p class="copyright">&copy; <span id="ano"></span> Kitnet Rio Claro. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- BOTÃO FLUTUANTE DO WHATSAPP: sempre visível no canto da tela (o link é preenchido pelo script.js) -->
-  <a id="zap-flutuante" class="zap-flutuante" target="_blank" rel="noopener" hidden aria-label="Falar no WhatsApp">💬 WhatsApp</a>
-
-  <!-- MÉTRICAS SEM COOKIES (opcional): escolha uma opção, tire o comentário e troque os dados pelos seus.
-       A: Cloudflare Web Analytics (grátis) = visitas, origem e aparelhos. Não conta cliques/eventos.
-       B: GoatCounter = visitas + eventos do site (qual imóvel foi aberto, cliques no WhatsApp...).
-          Uso comercial pode exigir plano pago: confira em goatcounter.com antes de usar.
-
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "SEU_TOKEN_AQUI"}'></script>
-
-  <script data-goatcounter="https://SEU-CODIGO.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-  -->
+  <!-- BOTÃO FLUTUANTE DO WHATSAPP: sempre visível no canto da tela (o endereço do WhatsApp é preenchido pelo script.js) -->
+  <button id="zap-flutuante" class="zap-flutuante" hidden aria-label="Falar no WhatsApp">💬 WhatsApp</button>
 
   <script src="script.js"></script>
 </body>
